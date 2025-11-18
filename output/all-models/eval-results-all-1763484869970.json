@@ -20008,9 +20008,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "001-server-component-1763487482650",
+        "experimentId": "001-server-component-1763483662631",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#001-server-component-1763487482650",
+        "experimentUrl": "#001-server-component-1763483662631",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -20048,14 +20048,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 4.548181250000005,
+            "metric": 4.737499625000001,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 4.548181250000005,
+            "metric": 4.737499625000001,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -20108,9 +20108,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "000-app-router-migration-simple-1763487521060",
+        "experimentId": "000-app-router-migration-simple-1763483691165",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#000-app-router-migration-simple-1763487521060",
+        "experimentUrl": "#000-app-router-migration-simple-1763483691165",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -20148,14 +20148,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 1.4809945820000066,
+            "metric": 1.3602732079999986,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 1.4809945820000066,
+            "metric": 1.3602732079999986,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -20208,9 +20208,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "002-client-component-1763487521253",
+        "experimentId": "002-client-component-1763483708607",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#002-client-component-1763487521253",
+        "experimentUrl": "#002-client-component-1763483708607",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -20248,14 +20248,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 4.218374541000005,
+            "metric": 4.067898292000005,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 4.218374541000005,
+            "metric": 4.067898292000005,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -20308,9 +20308,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "003-cookies-1763487553258",
+        "experimentId": "003-cookies-1763483712976",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#003-cookies-1763487553258",
+        "experimentUrl": "#003-cookies-1763483712976",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -20348,14 +20348,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 2.9101233740000025,
+            "metric": 3.103564292000003,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 2.9101233740000025,
+            "metric": 3.103564292000003,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -20408,9 +20408,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "005-react-use-api-1763487569641",
+        "experimentId": "005-react-use-api-1763483732249",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#005-react-use-api-1763487569641",
+        "experimentUrl": "#005-react-use-api-1763483732249",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -20448,114 +20448,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 0.6438510829999996,
+            "metric": 0.6485213330000006,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 0.6438510829999996,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_tokens": {
-            "name": "prompt_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "completion_tokens": {
-            "name": "completion_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "total_tokens": {
-            "name": "total_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_cached_tokens": {
-            "name": "prompt_cached_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_cache_creation_tokens": {
-            "name": "prompt_cache_creation_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          }
-        }
-      }
-    }
-  },
-  {
-    "status": "fulfilled",
-    "value": {
-      "evalPath": "004-search-params",
-      "status": "success",
-      "result": {
-        "projectName": "EVALS",
-        "experimentName": "Google Gemini 3 Pro Preview",
-        "projectId": "local-evals",
-        "experimentId": "004-search-params-1763487573078",
-        "projectUrl": "#local-evals",
-        "experimentUrl": "#004-search-params-1763487573078",
-        "comparisonExperimentName": "",
-        "scores": {
-          "eval_score": {
-            "name": "eval_score",
-            "score": 1,
-            "improvements": 0,
-            "regressions": 0
-          },
-          "build_score": {
-            "name": "build_score",
-            "score": 1,
-            "improvements": 0,
-            "regressions": 0
-          },
-          "lint_score": {
-            "name": "lint_score",
-            "score": 1,
-            "improvements": 0,
-            "regressions": 0
-          },
-          "test_score": {
-            "name": "test_score",
-            "score": 1,
-            "improvements": 0,
-            "regressions": 0
-          }
-        },
-        "metrics": {
-          "start": {
-            "name": "start",
-            "metric": 0,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "end": {
-            "name": "end",
-            "metric": 3.41200654200001,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "duration": {
-            "name": "duration",
-            "metric": 3.41200654200001,
+            "metric": 0.6485213330000006,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -20608,9 +20508,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "006-server-metadata-1763487580085",
+        "experimentId": "006-server-metadata-1763483742120",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#006-server-metadata-1763487580085",
+        "experimentUrl": "#006-server-metadata-1763483742120",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -20648,14 +20548,114 @@
           },
           "end": {
             "name": "end",
-            "metric": 3.377303250000003,
+            "metric": 3.5904756250000007,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 3.377303250000003,
+            "metric": 3.5904756250000007,
+            "unit": "s",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "prompt_tokens": {
+            "name": "prompt_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "completion_tokens": {
+            "name": "completion_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "total_tokens": {
+            "name": "total_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "prompt_cached_tokens": {
+            "name": "prompt_cached_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "prompt_cache_creation_tokens": {
+            "name": "prompt_cache_creation_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          }
+        }
+      }
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "evalPath": "004-search-params",
+      "status": "success",
+      "result": {
+        "projectName": "EVALS",
+        "experimentName": "Google Gemini 3 Pro Preview",
+        "projectId": "local-evals",
+        "experimentId": "004-search-params-1763483747265",
+        "projectUrl": "#local-evals",
+        "experimentUrl": "#004-search-params-1763483747265",
+        "comparisonExperimentName": "",
+        "scores": {
+          "eval_score": {
+            "name": "eval_score",
+            "score": 1,
+            "improvements": 0,
+            "regressions": 0
+          },
+          "build_score": {
+            "name": "build_score",
+            "score": 1,
+            "improvements": 0,
+            "regressions": 0
+          },
+          "lint_score": {
+            "name": "lint_score",
+            "score": 1,
+            "improvements": 0,
+            "regressions": 0
+          },
+          "test_score": {
+            "name": "test_score",
+            "score": 1,
+            "improvements": 0,
+            "regressions": 0
+          }
+        },
+        "metrics": {
+          "start": {
+            "name": "start",
+            "metric": 0,
+            "unit": "s",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "end": {
+            "name": "end",
+            "metric": 3.3291352499999993,
+            "unit": "s",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "duration": {
+            "name": "duration",
+            "metric": 3.3291352499999993,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -20708,9 +20708,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "007-client-metadata-1763487587886",
+        "experimentId": "007-client-metadata-1763483757798",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#007-client-metadata-1763487587886",
+        "experimentUrl": "#007-client-metadata-1763483757798",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -20748,14 +20748,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 3.3693315829999975,
+            "metric": 3.403836208999999,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 3.3693315829999975,
+            "metric": 3.403836208999999,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -20808,9 +20808,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "009-og-images-1763487603696",
+        "experimentId": "009-og-images-1763483772281",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#009-og-images-1763487603696",
+        "experimentUrl": "#009-og-images-1763483772281",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -20848,14 +20848,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 3.7536125839999985,
+            "metric": 4.561024957999998,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 3.7536125839999985,
+            "metric": 4.561024957999998,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -20908,9 +20908,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "010-route-handlers-1763487614463",
+        "experimentId": "010-route-handlers-1763483785937",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#010-route-handlers-1763487614463",
+        "experimentUrl": "#010-route-handlers-1763483785937",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -20948,14 +20948,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 3.4483308319999977,
+            "metric": 4.464574042000002,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 3.4483308319999977,
+            "metric": 4.464574042000002,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -21008,9 +21008,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "011-client-server-form-1763487649638",
+        "experimentId": "011-client-server-form-1763483822041",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#011-client-server-form-1763487649638",
+        "experimentUrl": "#011-client-server-form-1763483822041",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -21108,9 +21108,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "012-parallel-routes-1763487695871",
+        "experimentId": "012-parallel-routes-1763483871410",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#012-parallel-routes-1763487695871",
+        "experimentUrl": "#012-parallel-routes-1763483871410",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -21148,14 +21148,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 4.751982958,
+            "metric": 3.606424082999998,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 4.751982958,
+            "metric": 3.606424082999998,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -21208,9 +21208,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "013-pathname-server-1763487727338",
+        "experimentId": "013-pathname-server-1763483907232",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#013-pathname-server-1763487727338",
+        "experimentUrl": "#013-pathname-server-1763483907232",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -21308,9 +21308,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "014-server-routing-1763487762684",
+        "experimentId": "014-server-routing-1763483942654",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#014-server-routing-1763487762684",
+        "experimentUrl": "#014-server-routing-1763483942654",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -21348,14 +21348,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 3.2167601670000074,
+            "metric": 3.521500209000002,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 3.2167601670000074,
+            "metric": 3.521500209000002,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -21408,22 +21408,22 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "015-server-actions-exports-1763487807059",
+        "experimentId": "015-server-actions-exports-1763483971104",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#015-server-actions-exports-1763487807059",
+        "experimentUrl": "#015-server-actions-exports-1763483971104",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
             "name": "eval_score",
-            "score": 1,
+            "score": 0,
             "improvements": 0,
-            "regressions": 0
+            "regressions": 1
           },
           "build_score": {
             "name": "build_score",
-            "score": 1,
+            "score": 0,
             "improvements": 0,
-            "regressions": 0
+            "regressions": 1
           },
           "lint_score": {
             "name": "lint_score",
@@ -21448,14 +21448,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 3.916833958000003,
+            "metric": 1.336840583000001,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 3.916833958000003,
+            "metric": 1.336840583000001,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -21505,125 +21505,44 @@
       "evalPath": "008-generate-static-params",
       "status": "success",
       "result": {
-        "projectName": "EVALS",
-        "experimentName": "Google Gemini 3 Pro Preview",
-        "projectId": "local-evals",
-        "experimentId": "008-generate-static-params-1763487880340",
-        "projectUrl": "#local-evals",
-        "experimentUrl": "#008-generate-static-params-1763487880340",
-        "comparisonExperimentName": "",
-        "scores": {
-          "eval_score": {
-            "name": "eval_score",
-            "score": 0,
-            "improvements": 0,
-            "regressions": 1
-          },
-          "build_score": {
-            "name": "build_score",
-            "score": 0,
-            "improvements": 0,
-            "regressions": 1
-          },
-          "lint_score": {
-            "name": "lint_score",
-            "score": 0,
-            "improvements": 0,
-            "regressions": 1
-          },
-          "test_score": {
-            "name": "test_score",
-            "score": 0,
-            "improvements": 0,
-            "regressions": 1
+        "evalPath": "008-generate-static-params",
+        "modelResults": [
+          {
+            "model": "Google Gemini 3 Pro Preview",
+            "result": {
+              "error": "The operation timed out."
+            },
+            "score": 0
           }
-        },
-        "metrics": {
-          "start": {
-            "name": "start",
-            "metric": 0,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "end": {
-            "name": "end",
-            "metric": 0,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "duration": {
-            "name": "duration",
-            "metric": 0,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_tokens": {
-            "name": "prompt_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "completion_tokens": {
-            "name": "completion_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "total_tokens": {
-            "name": "total_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_cached_tokens": {
-            "name": "prompt_cached_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_cache_creation_tokens": {
-            "name": "prompt_cache_creation_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          }
-        }
+        ]
       }
     }
   },
   {
     "status": "fulfilled",
     "value": {
-      "evalPath": "017-use-search-params",
+      "evalPath": "016-client-cookies",
       "status": "success",
       "result": {
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "017-use-search-params-1763487908684",
+        "experimentId": "016-client-cookies-1763484051306",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#017-use-search-params-1763487908684",
+        "experimentUrl": "#016-client-cookies-1763484051306",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
             "name": "eval_score",
-            "score": 1,
+            "score": 0,
             "improvements": 0,
-            "regressions": 0
+            "regressions": 1
           },
           "build_score": {
             "name": "build_score",
-            "score": 1,
+            "score": 0,
             "improvements": 0,
-            "regressions": 0
+            "regressions": 1
           },
           "lint_score": {
             "name": "lint_score",
@@ -21633,9 +21552,9 @@
           },
           "test_score": {
             "name": "test_score",
-            "score": 1,
+            "score": 0,
             "improvements": 0,
-            "regressions": 0
+            "regressions": 1
           }
         },
         "metrics": {
@@ -21648,14 +21567,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 4.103836416000002,
+            "metric": 0.707422332999995,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 4.103836416000002,
+            "metric": 0.707422332999995,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -21708,9 +21627,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "018-use-router-1763487917869",
+        "experimentId": "018-use-router-1763484061502",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#018-use-router-1763487917869",
+        "experimentUrl": "#018-use-router-1763484061502",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -21748,14 +21667,114 @@
           },
           "end": {
             "name": "end",
-            "metric": 3.7466811669999998,
+            "metric": 3.6078393339999995,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 3.7466811669999998,
+            "metric": 3.6078393339999995,
+            "unit": "s",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "prompt_tokens": {
+            "name": "prompt_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "completion_tokens": {
+            "name": "completion_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "total_tokens": {
+            "name": "total_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "prompt_cached_tokens": {
+            "name": "prompt_cached_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "prompt_cache_creation_tokens": {
+            "name": "prompt_cache_creation_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          }
+        }
+      }
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "evalPath": "017-use-search-params",
+      "status": "success",
+      "result": {
+        "projectName": "EVALS",
+        "experimentName": "Google Gemini 3 Pro Preview",
+        "projectId": "local-evals",
+        "experimentId": "017-use-search-params-1763484078998",
+        "projectUrl": "#local-evals",
+        "experimentUrl": "#017-use-search-params-1763484078998",
+        "comparisonExperimentName": "",
+        "scores": {
+          "eval_score": {
+            "name": "eval_score",
+            "score": 1,
+            "improvements": 0,
+            "regressions": 0
+          },
+          "build_score": {
+            "name": "build_score",
+            "score": 1,
+            "improvements": 0,
+            "regressions": 0
+          },
+          "lint_score": {
+            "name": "lint_score",
+            "score": 1,
+            "improvements": 0,
+            "regressions": 0
+          },
+          "test_score": {
+            "name": "test_score",
+            "score": 1,
+            "improvements": 0,
+            "regressions": 0
+          }
+        },
+        "metrics": {
+          "start": {
+            "name": "start",
+            "metric": 0,
+            "unit": "s",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "end": {
+            "name": "end",
+            "metric": 3.8685607070000043,
+            "unit": "s",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "duration": {
+            "name": "duration",
+            "metric": 3.8685607070000043,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -21808,9 +21827,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "019-use-action-state-1763487967565",
+        "experimentId": "019-use-action-state-1763484108599",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#019-use-action-state-1763487967565",
+        "experimentUrl": "#019-use-action-state-1763484108599",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -21821,21 +21840,21 @@
           },
           "build_score": {
             "name": "build_score",
-            "score": 0,
-            "improvements": 0,
-            "regressions": 1
-          },
-          "lint_score": {
-            "name": "lint_score",
-            "score": 0,
-            "improvements": 0,
-            "regressions": 1
-          },
-          "test_score": {
-            "name": "test_score",
             "score": 1,
             "improvements": 0,
             "regressions": 0
+          },
+          "lint_score": {
+            "name": "lint_score",
+            "score": 1,
+            "improvements": 0,
+            "regressions": 0
+          },
+          "test_score": {
+            "name": "test_score",
+            "score": 0,
+            "improvements": 0,
+            "regressions": 1
           }
         },
         "metrics": {
@@ -21848,14 +21867,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 0.797365082999997,
+            "metric": 3.416101750999995,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 0.797365082999997,
+            "metric": 3.416101750999995,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -21908,9 +21927,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "020-no-use-effect-1763488020956",
+        "experimentId": "020-no-use-effect-1763484157838",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#020-no-use-effect-1763488020956",
+        "experimentUrl": "#020-no-use-effect-1763484157838",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -21948,14 +21967,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 3.4440082089999997,
+            "metric": 3.663344916999995,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 3.4440082089999997,
+            "metric": 3.663344916999995,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -22008,109 +22027,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "021-avoid-fetch-in-effect-1763488081734",
+        "experimentId": "021-avoid-fetch-in-effect-1763484166773",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#021-avoid-fetch-in-effect-1763488081734",
-        "comparisonExperimentName": "",
-        "scores": {
-          "eval_score": {
-            "name": "eval_score",
-            "score": 0,
-            "improvements": 0,
-            "regressions": 1
-          },
-          "build_score": {
-            "name": "build_score",
-            "score": 0,
-            "improvements": 0,
-            "regressions": 1
-          },
-          "lint_score": {
-            "name": "lint_score",
-            "score": 0,
-            "improvements": 0,
-            "regressions": 1
-          },
-          "test_score": {
-            "name": "test_score",
-            "score": 0,
-            "improvements": 0,
-            "regressions": 1
-          }
-        },
-        "metrics": {
-          "start": {
-            "name": "start",
-            "metric": 0,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "end": {
-            "name": "end",
-            "metric": 0,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "duration": {
-            "name": "duration",
-            "metric": 0,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_tokens": {
-            "name": "prompt_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "completion_tokens": {
-            "name": "completion_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "total_tokens": {
-            "name": "total_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_cached_tokens": {
-            "name": "prompt_cached_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_cache_creation_tokens": {
-            "name": "prompt_cache_creation_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          }
-        }
-      }
-    }
-  },
-  {
-    "status": "fulfilled",
-    "value": {
-      "evalPath": "016-client-cookies",
-      "status": "success",
-      "result": {
-        "projectName": "EVALS",
-        "experimentName": "Google Gemini 3 Pro Preview",
-        "projectId": "local-evals",
-        "experimentId": "016-client-cookies-1763488107386",
-        "projectUrl": "#local-evals",
-        "experimentUrl": "#016-client-cookies-1763488107386",
+        "experimentUrl": "#021-avoid-fetch-in-effect-1763484166773",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -22208,9 +22127,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "022-prefer-server-actions-1763488126274",
+        "experimentId": "022-prefer-server-actions-1763484200501",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#022-prefer-server-actions-1763488126274",
+        "experimentUrl": "#022-prefer-server-actions-1763484200501",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -22248,14 +22167,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 0.7165872079999972,
+            "metric": 0.7352459170000002,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 0.7165872079999972,
+            "metric": 0.7352459170000002,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -22308,9 +22227,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "024-avoid-redundant-usestate-1763488145002",
+        "experimentId": "024-avoid-redundant-usestate-1763484217682",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#024-avoid-redundant-usestate-1763488145002",
+        "experimentUrl": "#024-avoid-redundant-usestate-1763484217682",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -22348,14 +22267,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 4.367782499999998,
+            "metric": 4.313855499000003,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 4.367782499999998,
+            "metric": 4.313855499000003,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -22408,9 +22327,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "023-avoid-getserversideprops-1763488147322",
+        "experimentId": "023-avoid-getserversideprops-1763484225900",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#023-avoid-getserversideprops-1763488147322",
+        "experimentUrl": "#023-avoid-getserversideprops-1763484225900",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -22448,14 +22367,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 0.6773681250000009,
+            "metric": 0.6576346669999984,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 0.6773681250000009,
+            "metric": 0.6576346669999984,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -22508,9 +22427,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "025-prefer-next-link-1763488162201",
+        "experimentId": "025-prefer-next-link-1763484231005",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#025-prefer-next-link-1763488162201",
+        "experimentUrl": "#025-prefer-next-link-1763484231005",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -22548,14 +22467,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 3.9510738740000035,
+            "metric": 4.079590790999998,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 3.9510738740000035,
+            "metric": 4.079590790999998,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -22608,9 +22527,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "027-prefer-next-image-1763488180702",
+        "experimentId": "027-prefer-next-image-1763484256080",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#027-prefer-next-image-1763488180702",
+        "experimentUrl": "#027-prefer-next-image-1763484256080",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -22648,14 +22567,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 3.6641174990000036,
+            "metric": 5.099406208,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 3.6641174990000036,
+            "metric": 5.099406208,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -22708,9 +22627,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "026-no-serial-await-1763488192865",
+        "experimentId": "026-no-serial-await-1763484274594",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#026-no-serial-await-1763488192865",
+        "experimentUrl": "#026-no-serial-await-1763484274594",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -22748,14 +22667,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 1.4008994590000001,
+            "metric": 1.369237083,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 1.4008994590000001,
+            "metric": 1.369237083,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -22808,9 +22727,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "028-prefer-next-font-1763488204950",
+        "experimentId": "028-prefer-next-font-1763484279668",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#028-prefer-next-font-1763488204950",
+        "experimentUrl": "#028-prefer-next-font-1763484279668",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -22848,14 +22767,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 4.338042417000004,
+            "metric": 5.167502708,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 4.338042417000004,
+            "metric": 5.167502708,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -22908,9 +22827,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "029-use-cache-directive-1763488252388",
+        "experimentId": "029-use-cache-directive-1763484363917",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#029-use-cache-directive-1763488252388",
+        "experimentUrl": "#029-use-cache-directive-1763484363917",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -22948,14 +22867,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 0.7794299170000013,
+            "metric": 0.938270875000002,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 0.7794299170000013,
+            "metric": 0.938270875000002,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -23008,9 +22927,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "030-app-router-migration-hard-1763488300008",
+        "experimentId": "030-app-router-migration-hard-1763484377796",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#030-app-router-migration-hard-1763488300008",
+        "experimentUrl": "#030-app-router-migration-hard-1763484377796",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -23048,114 +22967,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 0.7006971670000057,
+            "metric": 0.667349000000002,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 0.7006971670000057,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_tokens": {
-            "name": "prompt_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "completion_tokens": {
-            "name": "completion_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "total_tokens": {
-            "name": "total_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_cached_tokens": {
-            "name": "prompt_cached_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_cache_creation_tokens": {
-            "name": "prompt_cache_creation_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          }
-        }
-      }
-    }
-  },
-  {
-    "status": "fulfilled",
-    "value": {
-      "evalPath": "031-ai-sdk-migration-simple",
-      "status": "success",
-      "result": {
-        "projectName": "EVALS",
-        "experimentName": "Google Gemini 3 Pro Preview",
-        "projectId": "local-evals",
-        "experimentId": "031-ai-sdk-migration-simple-1763488352899",
-        "projectUrl": "#local-evals",
-        "experimentUrl": "#031-ai-sdk-migration-simple-1763488352899",
-        "comparisonExperimentName": "",
-        "scores": {
-          "eval_score": {
-            "name": "eval_score",
-            "score": 0,
-            "improvements": 0,
-            "regressions": 1
-          },
-          "build_score": {
-            "name": "build_score",
-            "score": 0,
-            "improvements": 0,
-            "regressions": 1
-          },
-          "lint_score": {
-            "name": "lint_score",
-            "score": 1,
-            "improvements": 0,
-            "regressions": 0
-          },
-          "test_score": {
-            "name": "test_score",
-            "score": 0,
-            "improvements": 0,
-            "regressions": 1
-          }
-        },
-        "metrics": {
-          "start": {
-            "name": "start",
-            "metric": 0,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "end": {
-            "name": "end",
-            "metric": 0.7987594170000084,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "duration": {
-            "name": "duration",
-            "metric": 0.7987594170000084,
+            "metric": 0.667349000000002,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -23208,9 +23027,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "032-ai-sdk-model-specification-string-1763488357178",
+        "experimentId": "032-ai-sdk-model-specification-string-1763484431414",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#032-ai-sdk-model-specification-string-1763488357178",
+        "experimentUrl": "#032-ai-sdk-model-specification-string-1763484431414",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -23248,14 +23067,114 @@
           },
           "end": {
             "name": "end",
-            "metric": 4.4970979999999985,
+            "metric": 6.900573457999999,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 4.4970979999999985,
+            "metric": 6.900573457999999,
+            "unit": "s",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "prompt_tokens": {
+            "name": "prompt_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "completion_tokens": {
+            "name": "completion_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "total_tokens": {
+            "name": "total_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "prompt_cached_tokens": {
+            "name": "prompt_cached_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "prompt_cache_creation_tokens": {
+            "name": "prompt_cache_creation_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          }
+        }
+      }
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "evalPath": "031-ai-sdk-migration-simple",
+      "status": "success",
+      "result": {
+        "projectName": "EVALS",
+        "experimentName": "Google Gemini 3 Pro Preview",
+        "projectId": "local-evals",
+        "experimentId": "031-ai-sdk-migration-simple-1763484471976",
+        "projectUrl": "#local-evals",
+        "experimentUrl": "#031-ai-sdk-migration-simple-1763484471976",
+        "comparisonExperimentName": "",
+        "scores": {
+          "eval_score": {
+            "name": "eval_score",
+            "score": 0,
+            "improvements": 0,
+            "regressions": 1
+          },
+          "build_score": {
+            "name": "build_score",
+            "score": 0,
+            "improvements": 0,
+            "regressions": 1
+          },
+          "lint_score": {
+            "name": "lint_score",
+            "score": 1,
+            "improvements": 0,
+            "regressions": 0
+          },
+          "test_score": {
+            "name": "test_score",
+            "score": 0,
+            "improvements": 0,
+            "regressions": 1
+          }
+        },
+        "metrics": {
+          "start": {
+            "name": "start",
+            "metric": 0,
+            "unit": "s",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "end": {
+            "name": "end",
+            "metric": 1.505200708000004,
+            "unit": "s",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "duration": {
+            "name": "duration",
+            "metric": 1.505200708000004,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -23308,9 +23227,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "033-ai-sdk-v4-model-specification-function-1763488396983",
+        "experimentId": "033-ai-sdk-v4-model-specification-function-1763484482034",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#033-ai-sdk-v4-model-specification-function-1763488396983",
+        "experimentUrl": "#033-ai-sdk-v4-model-specification-function-1763484482034",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -23348,14 +23267,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 5.377694207999993,
+            "metric": 5.951234625000005,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 5.377694207999993,
+            "metric": 5.951234625000005,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -23408,9 +23327,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "035-ai-sdk-call-tools-1763488497076",
+        "experimentId": "035-ai-sdk-call-tools-1763484566415",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#035-ai-sdk-call-tools-1763488497076",
+        "experimentUrl": "#035-ai-sdk-call-tools-1763484566415",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -23448,14 +23367,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 11.856762583000018,
+            "metric": 2.4088836250000023,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 11.856762583000018,
+            "metric": 2.4088836250000023,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -23508,9 +23427,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "034-ai-sdk-render-visual-info-1763488506697",
+        "experimentId": "034-ai-sdk-render-visual-info-1763484606292",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#034-ai-sdk-render-visual-info-1763488506697",
+        "experimentUrl": "#034-ai-sdk-render-visual-info-1763484606292",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -23524,106 +23443,6 @@
             "score": 0,
             "improvements": 0,
             "regressions": 1
-          },
-          "lint_score": {
-            "name": "lint_score",
-            "score": 0,
-            "improvements": 0,
-            "regressions": 1
-          },
-          "test_score": {
-            "name": "test_score",
-            "score": 0,
-            "improvements": 0,
-            "regressions": 1
-          }
-        },
-        "metrics": {
-          "start": {
-            "name": "start",
-            "metric": 0,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "end": {
-            "name": "end",
-            "metric": 0,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "duration": {
-            "name": "duration",
-            "metric": 0,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_tokens": {
-            "name": "prompt_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "completion_tokens": {
-            "name": "completion_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "total_tokens": {
-            "name": "total_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_cached_tokens": {
-            "name": "prompt_cached_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_cache_creation_tokens": {
-            "name": "prompt_cache_creation_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          }
-        }
-      }
-    }
-  },
-  {
-    "status": "fulfilled",
-    "value": {
-      "evalPath": "037-ai-sdk-embed-text",
-      "status": "success",
-      "result": {
-        "projectName": "EVALS",
-        "experimentName": "Google Gemini 3 Pro Preview",
-        "projectId": "local-evals",
-        "experimentId": "037-ai-sdk-embed-text-1763488574435",
-        "projectUrl": "#local-evals",
-        "experimentUrl": "#037-ai-sdk-embed-text-1763488574435",
-        "comparisonExperimentName": "",
-        "scores": {
-          "eval_score": {
-            "name": "eval_score",
-            "score": 0,
-            "improvements": 0,
-            "regressions": 1
-          },
-          "build_score": {
-            "name": "build_score",
-            "score": 1,
-            "improvements": 0,
-            "regressions": 0
           },
           "lint_score": {
             "name": "lint_score",
@@ -23648,14 +23467,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 25.719137542000006,
+            "metric": 0.8960850830000127,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 25.719137542000006,
+            "metric": 0.8960850830000127,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -23708,9 +23527,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "036-ai-sdk-call-tools-multiple-steps-1763488575263",
+        "experimentId": "036-ai-sdk-call-tools-multiple-steps-1763484618752",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#036-ai-sdk-call-tools-multiple-steps-1763488575263",
+        "experimentUrl": "#036-ai-sdk-call-tools-multiple-steps-1763484618752",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -23748,14 +23567,114 @@
           },
           "end": {
             "name": "end",
-            "metric": 7.199349084000001,
+            "metric": 1.5027197919999962,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 7.199349084000001,
+            "metric": 1.5027197919999962,
+            "unit": "s",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "prompt_tokens": {
+            "name": "prompt_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "completion_tokens": {
+            "name": "completion_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "total_tokens": {
+            "name": "total_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "prompt_cached_tokens": {
+            "name": "prompt_cached_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "prompt_cache_creation_tokens": {
+            "name": "prompt_cache_creation_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          }
+        }
+      }
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "evalPath": "037-ai-sdk-embed-text",
+      "status": "success",
+      "result": {
+        "projectName": "EVALS",
+        "experimentName": "Google Gemini 3 Pro Preview",
+        "projectId": "local-evals",
+        "experimentId": "037-ai-sdk-embed-text-1763484644254",
+        "projectUrl": "#local-evals",
+        "experimentUrl": "#037-ai-sdk-embed-text-1763484644254",
+        "comparisonExperimentName": "",
+        "scores": {
+          "eval_score": {
+            "name": "eval_score",
+            "score": 0,
+            "improvements": 0,
+            "regressions": 1
+          },
+          "build_score": {
+            "name": "build_score",
+            "score": 1,
+            "improvements": 0,
+            "regressions": 0
+          },
+          "lint_score": {
+            "name": "lint_score",
+            "score": 1,
+            "improvements": 0,
+            "regressions": 0
+          },
+          "test_score": {
+            "name": "test_score",
+            "score": 0,
+            "improvements": 0,
+            "regressions": 1
+          }
+        },
+        "metrics": {
+          "start": {
+            "name": "start",
+            "metric": 0,
+            "unit": "s",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "end": {
+            "name": "end",
+            "metric": 6.175241124999997,
+            "unit": "s",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "duration": {
+            "name": "duration",
+            "metric": 6.175241124999997,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -23808,9 +23727,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "039-parallel-routes-1763488639450",
+        "experimentId": "039-parallel-routes-1763484688016",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#039-parallel-routes-1763488639450",
+        "experimentUrl": "#039-parallel-routes-1763484688016",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -23848,14 +23767,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 11.149290792,
+            "metric": 6.089905624999999,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 11.149290792,
+            "metric": 6.089905624999999,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -23908,9 +23827,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "038-ai-sdk-mcp-1763488667743",
+        "experimentId": "038-ai-sdk-mcp-1763484715941",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#038-ai-sdk-mcp-1763488667743",
+        "experimentUrl": "#038-ai-sdk-mcp-1763484715941",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -23948,14 +23867,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 3.0015924159999994,
+            "metric": 1.5850739999999932,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 3.0015924159999994,
+            "metric": 1.5850739999999932,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -24008,9 +23927,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "041-route-groups-1763488699070",
+        "experimentId": "041-route-groups-1763484735002",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#041-route-groups-1763488699070",
+        "experimentUrl": "#041-route-groups-1763484735002",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -24048,114 +23967,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 10.915353833000001,
+            "metric": 6.114088458999997,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 10.915353833000001,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_tokens": {
-            "name": "prompt_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "completion_tokens": {
-            "name": "completion_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "total_tokens": {
-            "name": "total_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_cached_tokens": {
-            "name": "prompt_cached_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_cache_creation_tokens": {
-            "name": "prompt_cache_creation_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          }
-        }
-      }
-    }
-  },
-  {
-    "status": "fulfilled",
-    "value": {
-      "evalPath": "040-intercepting-routes",
-      "status": "success",
-      "result": {
-        "projectName": "EVALS",
-        "experimentName": "Google Gemini 3 Pro Preview",
-        "projectId": "local-evals",
-        "experimentId": "040-intercepting-routes-1763488719549",
-        "projectUrl": "#local-evals",
-        "experimentUrl": "#040-intercepting-routes-1763488719549",
-        "comparisonExperimentName": "",
-        "scores": {
-          "eval_score": {
-            "name": "eval_score",
-            "score": 0,
-            "improvements": 0,
-            "regressions": 1
-          },
-          "build_score": {
-            "name": "build_score",
-            "score": 1,
-            "improvements": 0,
-            "regressions": 0
-          },
-          "lint_score": {
-            "name": "lint_score",
-            "score": 1,
-            "improvements": 0,
-            "regressions": 0
-          },
-          "test_score": {
-            "name": "test_score",
-            "score": 0,
-            "improvements": 0,
-            "regressions": 1
-          }
-        },
-        "metrics": {
-          "start": {
-            "name": "start",
-            "metric": 0,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "end": {
-            "name": "end",
-            "metric": 13.247552582999997,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "duration": {
-            "name": "duration",
-            "metric": 13.247552582999997,
+            "metric": 6.114088458999997,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -24208,9 +24027,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "042-loading-ui-1763488724056",
+        "experimentId": "042-loading-ui-1763484750910",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#042-loading-ui-1763488724056",
+        "experimentUrl": "#042-loading-ui-1763484750910",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -24248,14 +24067,114 @@
           },
           "end": {
             "name": "end",
-            "metric": 16.250926417000002,
+            "metric": 8.984122374999998,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 16.250926417000002,
+            "metric": 8.984122374999998,
+            "unit": "s",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "prompt_tokens": {
+            "name": "prompt_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "completion_tokens": {
+            "name": "completion_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "total_tokens": {
+            "name": "total_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "prompt_cached_tokens": {
+            "name": "prompt_cached_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "prompt_cache_creation_tokens": {
+            "name": "prompt_cache_creation_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          }
+        }
+      }
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "evalPath": "040-intercepting-routes",
+      "status": "success",
+      "result": {
+        "projectName": "EVALS",
+        "experimentName": "Google Gemini 3 Pro Preview",
+        "projectId": "local-evals",
+        "experimentId": "040-intercepting-routes-1763484767495",
+        "projectUrl": "#local-evals",
+        "experimentUrl": "#040-intercepting-routes-1763484767495",
+        "comparisonExperimentName": "",
+        "scores": {
+          "eval_score": {
+            "name": "eval_score",
+            "score": 0,
+            "improvements": 0,
+            "regressions": 1
+          },
+          "build_score": {
+            "name": "build_score",
+            "score": 1,
+            "improvements": 0,
+            "regressions": 0
+          },
+          "lint_score": {
+            "name": "lint_score",
+            "score": 1,
+            "improvements": 0,
+            "regressions": 0
+          },
+          "test_score": {
+            "name": "test_score",
+            "score": 0,
+            "improvements": 0,
+            "regressions": 1
+          }
+        },
+        "metrics": {
+          "start": {
+            "name": "start",
+            "metric": 0,
+            "unit": "s",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "end": {
+            "name": "end",
+            "metric": 5.209199458000017,
+            "unit": "s",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "duration": {
+            "name": "duration",
+            "metric": 5.209199458000017,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -24308,9 +24227,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "044-metadata-api-1763488750360",
+        "experimentId": "044-metadata-api-1763484790045",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#044-metadata-api-1763488750360",
+        "experimentUrl": "#044-metadata-api-1763484790045",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -24348,14 +24267,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 16.268456999999998,
+            "metric": 4.023733207999998,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 16.268456999999998,
+            "metric": 4.023733207999998,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -24408,9 +24327,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "043-error-boundaries-1763488756693",
+        "experimentId": "043-error-boundaries-1763484802374",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#043-error-boundaries-1763488756693",
+        "experimentUrl": "#043-error-boundaries-1763484802374",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -24448,114 +24367,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 4.403808208999999,
+            "metric": 1.8186665830000057,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 4.403808208999999,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_tokens": {
-            "name": "prompt_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "completion_tokens": {
-            "name": "completion_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "total_tokens": {
-            "name": "total_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_cached_tokens": {
-            "name": "prompt_cached_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_cache_creation_tokens": {
-            "name": "prompt_cache_creation_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          }
-        }
-      }
-    }
-  },
-  {
-    "status": "fulfilled",
-    "value": {
-      "evalPath": "046-streaming",
-      "status": "success",
-      "result": {
-        "projectName": "EVALS",
-        "experimentName": "Google Gemini 3 Pro Preview",
-        "projectId": "local-evals",
-        "experimentId": "046-streaming-1763488789396",
-        "projectUrl": "#local-evals",
-        "experimentUrl": "#046-streaming-1763488789396",
-        "comparisonExperimentName": "",
-        "scores": {
-          "eval_score": {
-            "name": "eval_score",
-            "score": 1,
-            "improvements": 0,
-            "regressions": 0
-          },
-          "build_score": {
-            "name": "build_score",
-            "score": 1,
-            "improvements": 0,
-            "regressions": 0
-          },
-          "lint_score": {
-            "name": "lint_score",
-            "score": 1,
-            "improvements": 0,
-            "regressions": 0
-          },
-          "test_score": {
-            "name": "test_score",
-            "score": 1,
-            "improvements": 0,
-            "regressions": 0
-          }
-        },
-        "metrics": {
-          "start": {
-            "name": "start",
-            "metric": 0,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "end": {
-            "name": "end",
-            "metric": 14.133445041,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "duration": {
-            "name": "duration",
-            "metric": 14.133445041,
+            "metric": 1.8186665830000057,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -24608,9 +24427,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "045-server-actions-form-1763488793070",
+        "experimentId": "045-server-actions-form-1763484811124",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#045-server-actions-form-1763488793070",
+        "experimentUrl": "#045-server-actions-form-1763484811124",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -24648,14 +24467,114 @@
           },
           "end": {
             "name": "end",
-            "metric": 13.673008542,
+            "metric": 5.3670349159999935,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 13.673008542,
+            "metric": 5.3670349159999935,
+            "unit": "s",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "prompt_tokens": {
+            "name": "prompt_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "completion_tokens": {
+            "name": "completion_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "total_tokens": {
+            "name": "total_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "prompt_cached_tokens": {
+            "name": "prompt_cached_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "prompt_cache_creation_tokens": {
+            "name": "prompt_cache_creation_tokens",
+            "metric": 0,
+            "unit": "tok",
+            "improvements": 0,
+            "regressions": 0
+          }
+        }
+      }
+    }
+  },
+  {
+    "status": "fulfilled",
+    "value": {
+      "evalPath": "046-streaming",
+      "status": "success",
+      "result": {
+        "projectName": "EVALS",
+        "experimentName": "Google Gemini 3 Pro Preview",
+        "projectId": "local-evals",
+        "experimentId": "046-streaming-1763484831570",
+        "projectUrl": "#local-evals",
+        "experimentUrl": "#046-streaming-1763484831570",
+        "comparisonExperimentName": "",
+        "scores": {
+          "eval_score": {
+            "name": "eval_score",
+            "score": 1,
+            "improvements": 0,
+            "regressions": 0
+          },
+          "build_score": {
+            "name": "build_score",
+            "score": 1,
+            "improvements": 0,
+            "regressions": 0
+          },
+          "lint_score": {
+            "name": "lint_score",
+            "score": 1,
+            "improvements": 0,
+            "regressions": 0
+          },
+          "test_score": {
+            "name": "test_score",
+            "score": 1,
+            "improvements": 0,
+            "regressions": 0
+          }
+        },
+        "metrics": {
+          "start": {
+            "name": "start",
+            "metric": 0,
+            "unit": "s",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "end": {
+            "name": "end",
+            "metric": 6.628157415999998,
+            "unit": "s",
+            "improvements": 0,
+            "regressions": 0
+          },
+          "duration": {
+            "name": "duration",
+            "metric": 6.628157415999998,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -24708,9 +24627,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "047-middleware-1763488822663",
+        "experimentId": "047-middleware-1763484836963",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#047-middleware-1763488822663",
+        "experimentUrl": "#047-middleware-1763484836963",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -24748,14 +24667,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 17.842759250999997,
+            "metric": 5.503938749999998,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 17.842759250999997,
+            "metric": 5.503938749999998,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -24808,9 +24727,9 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "048-draft-mode-1763488824978",
+        "experimentId": "048-draft-mode-1763484855638",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#048-draft-mode-1763488824978",
+        "experimentUrl": "#048-draft-mode-1763484855638",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
@@ -24848,14 +24767,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 14.594395541999999,
+            "metric": 3.073989708000001,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 14.594395541999999,
+            "metric": 3.073989708000001,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
@@ -24908,16 +24827,16 @@
         "projectName": "EVALS",
         "experimentName": "Google Gemini 3 Pro Preview",
         "projectId": "local-evals",
-        "experimentId": "049-revalidation-1763488861682",
+        "experimentId": "049-revalidation-1763484869955",
         "projectUrl": "#local-evals",
-        "experimentUrl": "#049-revalidation-1763488861682",
+        "experimentUrl": "#049-revalidation-1763484869955",
         "comparisonExperimentName": "",
         "scores": {
           "eval_score": {
             "name": "eval_score",
-            "score": 1,
+            "score": 0,
             "improvements": 0,
-            "regressions": 0
+            "regressions": 1
           },
           "build_score": {
             "name": "build_score",
@@ -24933,9 +24852,9 @@
           },
           "test_score": {
             "name": "test_score",
-            "score": 1,
+            "score": 0,
             "improvements": 0,
-            "regressions": 0
+            "regressions": 1
           }
         },
         "metrics": {
@@ -24948,14 +24867,14 @@
           },
           "end": {
             "name": "end",
-            "metric": 14.975523956999998,
+            "metric": 3.790187666000002,
             "unit": "s",
             "improvements": 0,
             "regressions": 0
           },
           "duration": {
             "name": "duration",
-            "metric": 14.975523956999998,
+            "metric": 3.790187666000002,
             "unit": "s",
             "improvements": 0,
             "regressions": 0

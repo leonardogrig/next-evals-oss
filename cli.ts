@@ -1329,16 +1329,120 @@ class ProcessPool {
     return MODELS.filter(model => !this.isEvalCompleted(evalPath, model.name));
   }
 
+  private createDefaultBraintrustResult(evalPath: string, modelName: string = "Unknown Model"): any {
+    // Create a default result structure with all required fields for failed/incomplete evals
+    const projectId = "local-evals";
+    const experimentId = `${evalPath}-${Date.now()}`;
+
+    return {
+      projectName: "EVALS",
+      experimentName: modelName,
+      projectId: projectId,
+      experimentId: experimentId,
+      projectUrl: `#${projectId}`,
+      experimentUrl: `#${experimentId}`,
+      comparisonExperimentName: "",
+      scores: {
+        eval_score: {
+          name: "eval_score",
+          score: 0.0,
+          improvements: 0,
+          regressions: 1,
+        },
+        build_score: {
+          name: "build_score",
+          score: 0.0,
+          improvements: 0,
+          regressions: 1,
+        },
+        lint_score: {
+          name: "lint_score",
+          score: 0.0,
+          improvements: 0,
+          regressions: 1,
+        },
+        test_score: {
+          name: "test_score",
+          score: 0.0,
+          improvements: 0,
+          regressions: 1,
+        },
+      },
+      metrics: {
+        start: {
+          name: "start",
+          metric: 0,
+          unit: "s",
+          improvements: 0,
+          regressions: 0,
+        },
+        end: {
+          name: "end",
+          metric: 0,
+          unit: "s",
+          improvements: 0,
+          regressions: 0,
+        },
+        duration: {
+          name: "duration",
+          metric: 0,
+          unit: "s",
+          improvements: 0,
+          regressions: 0,
+        },
+        prompt_tokens: {
+          name: "prompt_tokens",
+          metric: 0,
+          unit: "tok",
+          improvements: 0,
+          regressions: 0,
+        },
+        completion_tokens: {
+          name: "completion_tokens",
+          metric: 0,
+          unit: "tok",
+          improvements: 0,
+          regressions: 0,
+        },
+        total_tokens: {
+          name: "total_tokens",
+          metric: 0,
+          unit: "tok",
+          improvements: 0,
+          regressions: 0,
+        },
+        prompt_cached_tokens: {
+          name: "prompt_cached_tokens",
+          metric: 0,
+          unit: "tok",
+          improvements: 0,
+          regressions: 0,
+        },
+        prompt_cache_creation_tokens: {
+          name: "prompt_cache_creation_tokens",
+          metric: 0,
+          unit: "tok",
+          improvements: 0,
+          regressions: 0,
+        },
+      },
+    };
+  }
+
   private transformToBraintrustFormat(evalPath: string, result: any): any {
     // Transform our format to Braintrust format for UI compatibility
     if (!result || !result.modelResults || !Array.isArray(result.modelResults)) {
-      return result;
+      // Return a default failed result structure if data is missing
+      return this.createDefaultBraintrustResult(evalPath);
     }
 
     // Process each model result (usually just one)
     const transformedResults = result.modelResults.map((modelResult: any) => {
       const evalResults = modelResult.result?.evaluationResults;
-      if (!evalResults) return null;
+      if (!evalResults) {
+        // Return a default failed result for this model
+        return this.createDefaultBraintrustResult(evalPath, modelResult.model || "Unknown Model");
+      }
 
       // Calculate scores (1.0 for success, 0.0 for failure)
       const buildScore = evalResults.buildSuccess ? 1.0 : 0.0;
@@ -1450,7 +1554,7 @@ class ProcessPool {
           },
         },
       };
-    }).filter(Boolean);
+    });
 
     // Return array of transformed results for multi-model comparison
     // If only one model, return single object for backward compatibility with single-model displays
@@ -1459,7 +1563,8 @@ class ProcessPool {
     } else if (transformedResults.length > 1) {
       return transformedResults;
     } else {
-      return result;
+      // No valid results, return a default failed result
+      return this.createDefaultBraintrustResult(evalPath);
     }
   }
 

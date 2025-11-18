@@ -1,5 +1,6 @@
 import { LanguageModel } from "ai";
 import { createOpenAI } from "@ai-sdk/openai";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 import * as fs from "fs";
 import * as path from "path";
 export interface Model {
@@ -10,7 +11,8 @@ export interface Model {
 export interface CustomProviderConfig {
   name: string;
   modelId: string;
-  baseURL: string;
+  provider?: "openai" | "google"; // Provider type: openai-compatible or google
+  baseURL?: string; // Only for openai-compatible providers
   apiKey?: string;
   headers?: Record<string, string>;
 }
@@ -41,16 +43,29 @@ function loadCustomProviders(): Model[] {
 
     for (const config of customProviderConfigs) {
       try {
-        // Use createOpenAI with custom baseURL for OpenRouter compatibility
-        const provider = createOpenAI({
-          baseURL: config.baseURL,
-          apiKey: config.apiKey || process.env.OPENROUTER_API_KEY,
-          headers: config.headers,
-        });
+        let model: LanguageModel;
+
+        if (config.provider === "google") {
+          // Use Google Gemini API
+          const google = createGoogleGenerativeAI({
+            apiKey: config.apiKey || process.env.GEMINI_API_KEY,
+          });
+          model = google(config.modelId, {
+            useThinkingLevel: "high",
+          });
+        } else {
+          // Default to OpenAI-compatible API (OpenRouter, etc.)
+          const provider = createOpenAI({
+            baseURL: config.baseURL,
+            apiKey: config.apiKey || process.env.OPENROUTER_API_KEY,
+            headers: config.headers,
+          });
+          model = provider(config.modelId);
+        }
 
         customModels.push({
           name: config.name,
-          model: provider(config.modelId),
+          model,
         });
 
         console.log(`Loaded custom provider: ${config.name}`);

@@ -82,7 +82,7 @@ interface ProcessedEvaluation {
   projectUrl: string
   experimentUrl: string
   scores: {
-    evaluationScore: {
+    evaluationScore?: {
       name: string
       score: number
       improvements: number
@@ -124,6 +124,11 @@ const processEvaluationData = (): ProcessedEvaluation[] => {
       const results = Array.isArray(item.value.result) ? item.value.result : [item.value.result]
       
       results.forEach((result) => {
+        // Skip results without required data
+        if (!result.metrics || !result.experimentName) {
+          return
+        }
+
         // Use the full experiment name as the model name
         const modelName = result.experimentName
 
@@ -138,25 +143,25 @@ const processEvaluationData = (): ProcessedEvaluation[] => {
           projectUrl: result.projectUrl,
           experimentUrl: result.experimentUrl,
           scores: {
-            evaluationScore: {
+            evaluationScore: result.scores?.eval_score ? {
               name: "eval_score",
               score: result.scores.eval_score.score,
               improvements: result.scores.eval_score.improvements,
               regressions: result.scores.eval_score.regressions,
-            },
-            buildScore: result.scores.build_score ? {
+            } : undefined,
+            buildScore: result.scores?.build_score ? {
               name: "build_score",
               score: result.scores.build_score.score,
               improvements: result.scores.build_score.improvements,
               regressions: result.scores.build_score.regressions,
             } : undefined,
-            lintScore: result.scores.lint_score ? {
+            lintScore: result.scores?.lint_score ? {
               name: "lint_score",
               score: result.scores.lint_score.score,
               improvements: result.scores.lint_score.improvements,
               regressions: result.scores.lint_score.regressions,
             } : undefined,
-            testScore: result.scores.test_score ? {
+            testScore: result.scores?.test_score ? {
               name: "test_score",
               score: result.scores.test_score.score,
               improvements: result.scores.test_score.improvements,
@@ -251,6 +256,7 @@ export function ComparisonTable() {
     )
 
     if (!comparisonEvaluation) return null
+    if (!evaluation.scores.evaluationScore || !comparisonEvaluation.scores.evaluationScore) return null
 
     const scoreDiff = evaluation.scores.evaluationScore.score - comparisonEvaluation.scores.evaluationScore.score
     const durationDiff = evaluation.metrics.duration.metric - comparisonEvaluation.metrics.duration.metric
@@ -310,7 +316,7 @@ export function ComparisonTable() {
   // Calculate aggregate metrics for each model
   const modelSummaries: ModelSummary[] = Object.entries(groupedData).map(([modelName, evaluations]) => {
     const avgScore =
-      evaluations.reduce((sum, evaluationItem) => sum + evaluationItem.scores.evaluationScore.score, 0) /
+      evaluations.reduce((sum, evaluationItem) => sum + (evaluationItem.scores.evaluationScore?.score ?? 0), 0) /
       evaluations.length
     const avgBuildScore =
       evaluations.reduce((sum, evaluationItem) => sum + (evaluationItem.scores.buildScore?.score ?? 0), 0) /
@@ -662,31 +668,35 @@ export function ComparisonTable() {
                               </Select>
                             </TableCell>
                             <TableCell>
-                              <div className="flex items-center gap-2">
-                                <span
-                                  className={`font-semibold ${getScoreColor(evaluation.scores.evaluationScore.score)}`}
-                                >
-                                  {formatScoreAsPercentage(evaluation.scores.evaluationScore.score)}
-                                </span>
-                                {comparisonData && (
-                                  <span className={getDiffColor(comparisonData.scoreDiff)}>
-                                    ({formatDiff(comparisonData.scoreDiff, true)})
+                              {evaluation.scores.evaluationScore ? (
+                                <div className="flex items-center gap-2">
+                                  <span
+                                    className={`font-semibold ${getScoreColor(evaluation.scores.evaluationScore.score)}`}
+                                  >
+                                    {formatScoreAsPercentage(evaluation.scores.evaluationScore.score)}
                                   </span>
-                                )}
-                                <Tooltip>
-                                  <TooltipTrigger>
-                                    <Info className="h-4 w-4 text-muted-foreground" />
-                                  </TooltipTrigger>
-                                  <TooltipContent>
-                                    <p>Evaluation score (higher is better)</p>
-                                    {comparisonData && (
-                                      <p>Comparison score: {formatScoreAsPercentage(comparisonData.comparisonScore)}</p>
-                                    )}
-                                    <p>Improvements: {evaluation.scores.evaluationScore.improvements}</p>
-                                    <p>Regressions: {evaluation.scores.evaluationScore.regressions}</p>
-                                  </TooltipContent>
-                                </Tooltip>
-                              </div>
+                                  {comparisonData && (
+                                    <span className={getDiffColor(comparisonData.scoreDiff)}>
+                                      ({formatDiff(comparisonData.scoreDiff, true)})
+                                    </span>
+                                  )}
+                                  <Tooltip>
+                                    <TooltipTrigger>
+                                      <Info className="h-4 w-4 text-muted-foreground" />
+                                    </TooltipTrigger>
+                                    <TooltipContent>
+                                      <p>Evaluation score (higher is better)</p>
+                                      {comparisonData && (
+                                        <p>Comparison score: {formatScoreAsPercentage(comparisonData.comparisonScore)}</p>
+                                      )}
+                                      <p>Improvements: {evaluation.scores.evaluationScore.improvements}</p>
+                                      <p>Regressions: {evaluation.scores.evaluationScore.regressions}</p>
+                                    </TooltipContent>
+                                  </Tooltip>
+                                </div>
+                              ) : (
+                                <span className="text-muted-foreground">N/A</span>
+                              )}
                             </TableCell>
                             <TableCell>
                               <div className="flex items-center gap-2">
