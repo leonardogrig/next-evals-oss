@@ -974,9 +974,13 @@ async function runSingleModelInProcess(
   const prompt = await fs.readFile(promptFile, "utf8");
 
   // Create model-specific output directory to avoid conflicts
+  const sanitizedModelName = model.name
+    .replace(/[^a-zA-Z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .toLowerCase();
   const modelOutputDir = path.join(
     fullEvalPath,
-    `output-dry-${model.name.replace(/\s+/g, "-").toLowerCase()}`,
+    `output-dry-${sanitizedModelName}`,
   );
 
   if (verbose) {
@@ -1115,11 +1119,63 @@ async function runEvalDry(
     console.log(`📁 Input Directory: ${inputDir}`);
   }
 
-  // Run all models or just the first one based on allModels flag
-  const modelsToRun = allModels ? MODELS : [MODELS[0]];
-  const modelResults: { model: string; result: any; score: number }[] = [];
+  // Determine which models need to run based on existing results
+  let modelsToRun = allModels ? MODELS : [MODELS[0]];
 
   if (allModels && MODELS.length > 1) {
+    // Check for existing results and skip models that already completed this eval
+    const outputDir = path.join(process.cwd(), "output", "all-models");
+    const evaluationsFile = path.join(outputDir, "evaluations.json");
+
+    try {
+      const existingData = await fs.readFile(evaluationsFile, "utf8");
+      const existingResults = JSON.parse(existingData);
+
+      // Build set of completed model names for this eval
+      const completedModels = new Set<string>();
+      for (const result of existingResults) {
+        if (result.status === "fulfilled" && result.value?.status === "success") {
+          const evalResult = result.value?.result;
+          const resultEvalPath = result.value?.evalPath;
+
+          // Only check results for this specific eval
+          if (resultEvalPath === evalPath && evalResult?.experimentName && evalResult?.scores) {
+            const modelName = evalResult.experimentName;
+            const evalScore = evalResult.scores.eval_score?.score ?? 0;
+
+            // Only skip if it passed (score = 1.0)
+            if (evalScore >= 1.0) {
+              completedModels.add(modelName);
+            }
+          }
+        }
+      }
+
+      // Filter out models that already have passing results
+      const filteredModels = MODELS.filter(model => !completedModels.has(model.name));
+
+      if (filteredModels.length < MODELS.length) {
+        const skippedModels = MODELS.filter(model => completedModels.has(model.name)).map(m => m.name);
+        console.log(`⏭️  Skipping ${skippedModels.length} model(s) that already passed: ${skippedModels.join(", ")}`);
+      }
+
+      modelsToRun = filteredModels.length > 0 ? filteredModels : [];
+
+      if (modelsToRun.length === 0) {
+        console.log(`✅ All models already completed ${evalPath}, skipping`);
+        return { modelResults: [] };
+      }
+    } catch (err) {
+      // File doesn't exist or parse error, run all models
+      if (verbose) {
+        console.log(`📋 No existing results found, running all models`);
+      }
+    }
+  }
+
+  const modelResults: { model: string; result: any; score: number }[] = [];
+
+  if (allModels && modelsToRun.length > 1) {
     // For multiple models, run each with separate output directories
     if (verbose) {
       console.log(

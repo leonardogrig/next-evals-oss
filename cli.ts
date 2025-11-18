@@ -718,13 +718,33 @@ function transformToEvalResults(results: PromiseSettledResult<any>[]): Array<{
   return results.map((result) => {
     if (result.status === "fulfilled" && result.value.status === "success") {
       const { evalPath, result: evalResult } = result.value;
+
+      // Support both old format (evaluationResults) and new Braintrust format (scores)
+      let buildSuccess = false;
+      let lintSuccess = false;
+      let testSuccess = false;
+      let duration = evalResult?.duration;
+
+      if (evalResult?.scores) {
+        // New Braintrust format with scores
+        buildSuccess = (evalResult.scores.build_score?.score ?? 0) >= 1;
+        lintSuccess = (evalResult.scores.lint_score?.score ?? 0) >= 1;
+        testSuccess = (evalResult.scores.test_score?.score ?? 0) >= 1;
+        duration = evalResult.metrics?.duration?.metric;
+      } else if (evalResult?.evaluationResults) {
+        // Old format with evaluationResults
+        buildSuccess = evalResult.evaluationResults.buildSuccess ?? false;
+        lintSuccess = evalResult.evaluationResults.lintSuccess ?? false;
+        testSuccess = evalResult.evaluationResults.testSuccess ?? false;
+      }
+
       return {
         evalPath,
         result: {
-          buildSuccess: evalResult?.evaluationResults?.buildSuccess ?? false,
-          lintSuccess: evalResult?.evaluationResults?.lintSuccess ?? false,
-          testSuccess: evalResult?.evaluationResults?.testSuccess ?? false,
-          duration: evalResult?.duration,
+          buildSuccess,
+          lintSuccess,
+          testSuccess,
+          duration,
         },
       };
     } else {
@@ -1010,7 +1030,15 @@ async function displayResultsTable(
     } else {
       // Single model results - use unified formatting
       const transformedResults = transformToEvalResults(results);
-      console.log(formatClaudeCodeResultsTable(transformedResults));
+
+      // Extract model name from results (check both Braintrust format and old format)
+      const firstResult = results.find((r) => r.status === "fulfilled")?.value;
+      const modelName =
+        firstResult?.result?.experimentName || // Braintrust format
+        firstResult?.result?.modelResults?.[0]?.model || // Old format
+        undefined;
+
+      console.log(formatClaudeCodeResultsTable(transformedResults, modelName));
       console.log("\n📋 Legend: ✅✅✅ = Build/Lint/Test");
 
       // Collect and display error details
@@ -1196,6 +1224,11 @@ class ProcessPool {
   private readonly debug: boolean;
   private readonly progressTracker: ProgressTracker | null;
   private memoryCheckInterval: NodeJS.Timeout | null = null;
+  private readonly outputDir: string;
+  private readonly modelFolder: string;
+  private readonly evaluationsFile: string;
+  private fileWriteQueue: Promise<void> = Promise.resolve(); // Serialize file writes
+  private completedEvals: Set<string> = new Set(); // Track completed evals for this model
 
   constructor(
     maxProcesses: number,
@@ -1209,13 +1242,393 @@ class ProcessPool {
     this.verbose = verbose;
     this.debug = debug;
     this.progressTracker = progressTracker;
+
+    // Determine model folder name from MODELS array
+    // If multiple models, use "all-models" folder for comparison view
+    const modelName = MODELS.length > 1
+      ? "all-models"
+      : (MODELS.length > 0 ? MODELS[0].name : "default");
+    const sanitizedModelName = modelName
+      .replace(/[^a-zA-Z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .toLowerCase();
+
+    const baseOutputDir = process.env.OUTPUT_DIR || path.join(process.cwd(), "output");
+    this.modelFolder = sanitizedModelName;
+    this.outputDir = path.join(baseOutputDir, sanitizedModelName);
+    this.evaluationsFile = path.join(this.outputDir, "evaluations.json");
+  }
+
+  private async loadCompletedEvals(): Promise<void> {
+    try {
+      const fileContent = await fs.readFile(this.evaluationsFile, "utf8");
+      const results = JSON.parse(fileContent);
+
+      for (const result of results) {
+        if (result.status === "fulfilled" && result.value?.status === "success") {
+          const evalResult = result.value?.result;
+          const evalPath = result.value?.evalPath;
+
+          // Handle Braintrust format (flattened structure with experimentName as model)
+          if (evalResult?.experimentName && evalResult?.scores) {
+            const modelName = evalResult.experimentName;
+            const evalScore = evalResult.scores.eval_score?.score ?? 0;
+
+            // Only consider it completed if it passed (score = 1.0)
+            if (evalScore >= 1.0) {
+              const key = `${evalPath}_${modelName}`;
+              this.completedEvals.add(key);
+            }
+          }
+          // Legacy format support (old multi-model structure)
+          else if (evalResult?.modelResults && Array.isArray(evalResult.modelResults)) {
+            for (const mr of evalResult.modelResults) {
+              const modelName = mr.model;
+              const isPassed =
+                mr.result?.evaluationResults?.buildSuccess &&
+                mr.result?.evaluationResults?.lintSuccess &&
+                mr.result?.evaluationResults?.testSuccess;
+
+              if (isPassed) {
+                const key = `${evalPath}_${modelName}`;
+                this.completedEvals.add(key);
+              }
+            }
+          }
+          // Single model structure
+          else if (evalResult?.evaluationResults && MODELS.length > 0) {
+            const modelName = MODELS[0].name;
+            const isPassed =
+              evalResult.evaluationResults.buildSuccess &&
+              evalResult.evaluationResults.lintSuccess &&
+              evalResult.evaluationResults.testSuccess;
+
+            if (isPassed) {
+              const key = `${evalPath}_${modelName}`;
+              this.completedEvals.add(key);
+            }
+          }
+        }
+      }
+
+      if (this.completedEvals.size > 0) {
+        console.log(`📋 Found ${this.completedEvals.size} completed eval+model combination(s), will skip them`);
+        if (this.verbose) {
+          console.log(`   Completed: ${Array.from(this.completedEvals).join(", ")}`);
+        }
+      }
+    } catch (err) {
+      // File doesn't exist yet, no completed evals
+      if (this.verbose) {
+        console.log(`📋 No existing results found for ${this.modelFolder}, starting fresh`);
+      }
+    }
+  }
+
+  private isEvalCompleted(evalPath: string, modelName?: string): boolean {
+    if (modelName) {
+      const key = `${evalPath}_${modelName}`;
+      return this.completedEvals.has(key);
+    }
+    // Legacy: check if eval is completed for ANY model
+    const evalPrefix = `${evalPath}_`;
+    return Array.from(this.completedEvals).some(key => key.startsWith(evalPrefix));
+  }
+
+  private getModelsToRun(evalPath: string): typeof MODELS {
+    // Filter out models that already have completed results for this eval
+    return MODELS.filter(model => !this.isEvalCompleted(evalPath, model.name));
+  }
+
+  private transformToBraintrustFormat(evalPath: string, result: any): any {
+    // Transform our format to Braintrust format for UI compatibility
+    if (!result || !result.modelResults || !Array.isArray(result.modelResults)) {
+      return result;
+    }
+
+    // Process each model result (usually just one)
+    const transformedResults = result.modelResults.map((modelResult: any) => {
+      const evalResults = modelResult.result?.evaluationResults;
+      if (!evalResults) return null;
+
+      // Calculate scores (1.0 for success, 0.0 for failure)
+      const buildScore = evalResults.buildSuccess ? 1.0 : 0.0;
+      const lintScore = evalResults.lintSuccess ? 1.0 : 0.0;
+      const testScore = evalResults.testSuccess ? 1.0 : 0.0;
+      const evalScore = buildScore * lintScore * testScore; // Overall score
+
+      // Calculate total duration in seconds
+      const totalDuration = (
+        (evalResults.buildDuration || 0) +
+        (evalResults.lintDuration || 0) +
+        (evalResults.testDuration || 0)
+      ) / 1000; // Convert ms to seconds
+
+      // Generate fake IDs for Braintrust compatibility
+      const projectId = "local-evals";
+      const experimentId = `${evalPath}-${Date.now()}`;
+
+      return {
+        projectName: "EVALS",
+        experimentName: modelResult.model,
+        projectId: projectId,
+        experimentId: experimentId,
+        projectUrl: `#${projectId}`,
+        experimentUrl: `#${experimentId}`,
+        comparisonExperimentName: "",
+        scores: {
+          eval_score: {
+            name: "eval_score",
+            score: evalScore,
+            improvements: 0,
+            regressions: evalScore === 1.0 ? 0 : 1,
+          },
+          build_score: {
+            name: "build_score",
+            score: buildScore,
+            improvements: 0,
+            regressions: buildScore === 1.0 ? 0 : 1,
+          },
+          lint_score: {
+            name: "lint_score",
+            score: lintScore,
+            improvements: 0,
+            regressions: lintScore === 1.0 ? 0 : 1,
+          },
+          test_score: {
+            name: "test_score",
+            score: testScore,
+            improvements: 0,
+            regressions: testScore === 1.0 ? 0 : 1,
+          },
+        },
+        metrics: {
+          start: {
+            name: "start",
+            metric: 0,
+            unit: "s",
+            improvements: 0,
+            regressions: 0,
+          },
+          end: {
+            name: "end",
+            metric: totalDuration,
+            unit: "s",
+            improvements: 0,
+            regressions: 0,
+          },
+          duration: {
+            name: "duration",
+            metric: totalDuration,
+            unit: "s",
+            improvements: 0,
+            regressions: 0,
+          },
+          prompt_tokens: {
+            name: "prompt_tokens",
+            metric: 0,
+            unit: "tok",
+            improvements: 0,
+            regressions: 0,
+          },
+          completion_tokens: {
+            name: "completion_tokens",
+            metric: 0,
+            unit: "tok",
+            improvements: 0,
+            regressions: 0,
+          },
+          total_tokens: {
+            name: "total_tokens",
+            metric: 0,
+            unit: "tok",
+            improvements: 0,
+            regressions: 0,
+          },
+          prompt_cached_tokens: {
+            name: "prompt_cached_tokens",
+            metric: 0,
+            unit: "tok",
+            improvements: 0,
+            regressions: 0,
+          },
+          prompt_cache_creation_tokens: {
+            name: "prompt_cache_creation_tokens",
+            metric: 0,
+            unit: "tok",
+            improvements: 0,
+            regressions: 0,
+          },
+        },
+      };
+    }).filter(Boolean);
+
+    // Return array of transformed results for multi-model comparison
+    // If only one model, return single object for backward compatibility with single-model displays
+    if (transformedResults.length === 1) {
+      return transformedResults[0];
+    } else if (transformedResults.length > 1) {
+      return transformedResults;
+    } else {
+      return result;
+    }
+  }
+
+  private async appendResultToFile(evalPath: string, status: string, result?: any, error?: string) {
+    // Queue the write to prevent race conditions
+    this.fileWriteQueue = this.fileWriteQueue.then(async () => {
+      try {
+        // Ensure output directory exists
+        await fs.mkdir(this.outputDir, { recursive: true });
+
+        // Read existing results
+        let existingResults: any[] = [];
+        try {
+          const fileContent = await fs.readFile(this.evaluationsFile, "utf8");
+          existingResults = JSON.parse(fileContent);
+        } catch (err) {
+          // File doesn't exist yet, start with empty array
+          existingResults = [];
+        }
+
+        // Find if this eval already exists in results (in case of retry)
+        const existingIndex = existingResults.findIndex((r: any) => {
+          if (r.status === "fulfilled") {
+            return r.value?.evalPath === evalPath;
+          } else if (r.status === "rejected") {
+            return r.reason?.evalPath === evalPath;
+          }
+          return false;
+        });
+
+        // Transform result to Braintrust format for UI compatibility
+        const transformedResult = status === "success" && result
+          ? this.transformToBraintrustFormat(evalPath, result)
+          : result;
+
+        // Create the result object in the same format as Promise.allSettled
+        const newResult = status === "success"
+          ? { status: "fulfilled", value: { evalPath, status, result: transformedResult } }
+          : { status: "rejected", reason: { evalPath, error } };
+
+        // Update or append
+        if (existingIndex >= 0) {
+          existingResults[existingIndex] = newResult;
+        } else {
+          existingResults.push(newResult);
+        }
+
+        // Write back to file
+        await fs.writeFile(
+          this.evaluationsFile,
+          JSON.stringify(existingResults, null, 2),
+          "utf8"
+        );
+
+        // Mark as completed if it was a successful result with all checks passing
+        if (status === "success" && result) {
+          let isPassed = false;
+
+          // Handle both modelResults structure (multi-model) and direct structure (single model)
+          if (result.modelResults && Array.isArray(result.modelResults)) {
+            // Multi-model structure: check if all models passed
+            isPassed = result.modelResults.every((mr: any) =>
+              mr.result?.evaluationResults?.buildSuccess &&
+              mr.result?.evaluationResults?.lintSuccess &&
+              mr.result?.evaluationResults?.testSuccess
+            );
+          } else if (result.evaluationResults) {
+            // Single model structure
+            isPassed =
+              result.evaluationResults.buildSuccess &&
+              result.evaluationResults.lintSuccess &&
+              result.evaluationResults.testSuccess;
+          }
+
+          if (isPassed) {
+            this.completedEvals.add(evalPath);
+          }
+        }
+
+        if (this.verbose) {
+          console.log(`📁 Appended result for ${evalPath} to ${this.evaluationsFile}`);
+        }
+      } catch (error) {
+        console.warn(`Failed to append result to file: ${error}`);
+      }
+    });
+
+    // Wait for this write to complete before returning
+    await this.fileWriteQueue;
   }
 
   async runEvals(evalPaths: string[]): Promise<PromiseSettledResult<any>[]> {
-    const promises = evalPaths.map((evalPath) => this.runEval(evalPath));
-    const results = await Promise.allSettled(promises);
+    // Load completed evals to skip them
+    await this.loadCompletedEvals();
+
+    // For multi-model runs, check if ALL models are completed for each eval
+    // For single-model runs, check if the eval is completed
+    const isMultiModel = this.modelFolder === "all-models";
+
+    let evalsToRun: string[];
+    let skippedEvals: string[];
+
+    if (isMultiModel) {
+      // For multi-model runs, only skip if ALL models have completed the eval
+      evalsToRun = evalPaths.filter((evalPath) => {
+        // Check if all models are completed for this eval
+        const allCompleted = MODELS.every(model =>
+          this.isEvalCompleted(evalPath, model.name)
+        );
+        return !allCompleted;
+      });
+      skippedEvals = evalPaths.filter((evalPath) => {
+        const allCompleted = MODELS.every(model =>
+          this.isEvalCompleted(evalPath, model.name)
+        );
+        return allCompleted;
+      });
+    } else {
+      // For single-model runs, use the legacy behavior
+      evalsToRun = evalPaths.filter((evalPath) => !this.isEvalCompleted(evalPath));
+      skippedEvals = evalPaths.filter((evalPath) => this.isEvalCompleted(evalPath));
+    }
+
+    if (skippedEvals.length > 0) {
+      console.log(`⏭️  Skipping ${skippedEvals.length} eval(s) where all models completed`);
+      if (this.verbose) {
+        console.log(`   Skipped: ${skippedEvals.join(", ")}`);
+      }
+    }
+
+    if (evalsToRun.length === 0) {
+      console.log(`✅ All evals already completed for all models!`);
+      // Return existing results from file
+      try {
+        const fileContent = await fs.readFile(this.evaluationsFile, "utf8");
+        return JSON.parse(fileContent);
+      } catch {
+        return [];
+      }
+    }
+
+    console.log(`🚀 Running ${evalsToRun.length} eval(s) for ${this.modelFolder}...\n`);
+
+    // Run only the non-completed evals
+    const promises = evalsToRun.map((evalPath) => this.runEval(evalPath));
+    const newResults = await Promise.allSettled(promises);
+
+    // Combine with skipped evals (load from existing results)
+    let allResults: PromiseSettledResult<any>[] = [];
+    try {
+      const fileContent = await fs.readFile(this.evaluationsFile, "utf8");
+      allResults = JSON.parse(fileContent);
+    } catch {
+      allResults = [];
+    }
+
     await this.cleanup();
-    return results;
+    return allResults;
   }
 
   private async runEval(evalPath: string): Promise<{
@@ -1329,7 +1742,7 @@ class ProcessPool {
       }
     });
 
-    child.on("exit", (code, signal) => {
+    child.on("exit", async (code, signal) => {
       this.activeProcesses.delete(child);
 
       // Update progress tracker immediately when process completes
@@ -1348,11 +1761,13 @@ class ProcessPool {
         if (stdout.trim()) {
           try {
             const lines = stdout.trim().split("\n");
-            const lastLine = lines[lines.length - 1];
-            if (lastLine.startsWith("EVAL_RESULT:")) {
-              result = JSON.parse(lastLine.replace("EVAL_RESULT:", ""));
+            // Find the line that starts with EVAL_RESULT: (not necessarily the last line)
+            const resultLine = lines.find(line => line.startsWith("EVAL_RESULT:"));
+            if (resultLine) {
+              result = JSON.parse(resultLine.replace("EVAL_RESULT:", ""));
             } else {
               // Debug: show what we got instead
+              const lastLine = lines[lines.length - 1];
               console.warn(
                 `No EVAL_RESULT found for ${job.evalPath}. Last line: "${lastLine}"`
               );
@@ -1371,18 +1786,26 @@ class ProcessPool {
           console.warn(`Empty stdout for ${job.evalPath}`);
         }
 
+        // Append result to evaluations.json immediately
+        await this.appendResultToFile(job.evalPath, "success", result);
+
         job.resolve({
           evalPath: job.evalPath,
           status: "success",
           result,
         });
       } else {
+        const errorMsg = signal
+          ? `Process killed by signal ${signal}`
+          : `Process exited with code ${code}`;
+
+        // Append error result to evaluations.json immediately
+        await this.appendResultToFile(job.evalPath, "error", undefined, errorMsg);
+
         job.resolve({
           evalPath: job.evalPath,
           status: "error",
-          error: signal
-            ? `Process killed by signal ${signal}`
-            : `Process exited with code ${code}`,
+          error: errorMsg,
         });
       }
 
@@ -1390,13 +1813,16 @@ class ProcessPool {
       this.processQueue();
     });
 
-    child.on("error", (error) => {
+    child.on("error", async (error) => {
       this.activeProcesses.delete(child);
 
       // Update progress tracker immediately on process error
       if (this.progressTracker && !this.verbose) {
         this.progressTracker.fail(job.evalPath);
       }
+
+      // Append error result to evaluations.json immediately
+      await this.appendResultToFile(job.evalPath, "error", undefined, error.message);
 
       job.resolve({
         evalPath: job.evalPath,
@@ -2092,20 +2518,8 @@ async function main() {
 
       if (threadCount > 1) {
         const memInfo = checkAvailableMemory();
-        console.log(
-          `Running ${allEvals.length} evals using ${threadCount} processes (max ${threadCount} concurrent)...`
-        );
-        console.log(
-          `Memory: ${memInfo.available}MB available / ${memInfo.total}MB total (${memInfo.percentage}% free)\n`
-        );
 
-        // Initialize progress tracker before creating worker pool
-        if (!values.verbose) {
-          globalProgressTracker = new ProgressTracker();
-          globalProgressTracker.start(allEvals);
-        }
-
-        // Use process pool for multi-process execution
+        // Initialize process pool (this will load completed evals)
         const processPool = new ProcessPool(
           threadCount,
           values.dry || false,
@@ -2114,6 +2528,30 @@ async function main() {
           globalProgressTracker
         );
 
+        // Determine model folder for display
+        // Must match ProcessPool's folder logic for multi-model runs
+        const modelName = MODELS.length > 1
+          ? "all-models"
+          : (MODELS.length > 0 ? MODELS[0].name : "default");
+        const sanitizedModelName = modelName
+          .replace(/[^a-zA-Z0-9]+/g, "-")
+          .replace(/^-+|-+$/g, "")
+          .toLowerCase();
+
+        console.log(
+          `Running ${allEvals.length} evals for "${modelName}" using ${threadCount} processes (max ${threadCount} concurrent)...`
+        );
+        console.log(
+          `Memory: ${memInfo.available}MB available / ${memInfo.total}MB total (${memInfo.percentage}% free)`
+        );
+        console.log(`📁 Results folder: output/${sanitizedModelName}/\n`);
+
+        // Initialize progress tracker (will be updated by processPool.runEvals after filtering)
+        if (!values.verbose) {
+          globalProgressTracker = new ProgressTracker();
+          globalProgressTracker.start(allEvals);
+        }
+
         const results = await processPool.runEvals(allEvals);
 
         // Progress tracker updates happen in real-time in worker message handlers
@@ -2121,25 +2559,72 @@ async function main() {
         // Clean up progress tracker and output folders
         await cleanup(values.debug);
 
-        // Save all results to JSON file
-        const outputDir = process.env.OUTPUT_DIR || "/output";
+        // Note: evaluations.json has already been written incrementally as each eval completed
+        // (see ProcessPool.appendResultToFile). This final step creates a timestamped backup.
+        const baseOutputDir = process.env.OUTPUT_DIR || path.join(process.cwd(), "output");
+        const modelOutputDir = path.join(baseOutputDir, sanitizedModelName);
         const allResultsFile = path.join(
-          outputDir,
+          modelOutputDir,
           `eval-results-all-${Date.now()}.json`
         );
-        const publicAllResultsFile = path.join(outputDir, `evaluations.json`);
+        const publicAllResultsFile = path.join(modelOutputDir, `evaluations.json`);
+
         try {
+          await fs.mkdir(modelOutputDir, { recursive: true });
+
+          // Read the already-transformed evaluations.json (written incrementally)
+          // instead of using raw results which would overwrite the transformations
+          let finalResults = results;
+          try {
+            const transformedData = await fs.readFile(publicAllResultsFile, "utf8");
+            finalResults = JSON.parse(transformedData);
+
+            // For multi-model results, flatten the array structure for UI compatibility
+            // Convert: { result: [model1, model2] } -> [{ result: model1 }, { result: model2 }]
+            const flattened = [];
+            for (const item of finalResults) {
+              if (item.status === 'fulfilled' && item.value?.result) {
+                const { evalPath, status, result } = item.value;
+                if (Array.isArray(result)) {
+                  // Multi-model: create separate items for each model
+                  for (const modelResult of result) {
+                    flattened.push({
+                      status: 'fulfilled',
+                      value: { evalPath, status, result: modelResult }
+                    });
+                  }
+                } else {
+                  // Single model: keep as-is
+                  flattened.push(item);
+                }
+              } else {
+                // Keep rejected/error items as-is
+                flattened.push(item);
+              }
+            }
+            finalResults = flattened;
+          } catch (err) {
+            // If file doesn't exist, fall back to raw results
+            console.warn(`Could not read transformed results, using raw results`);
+          }
+
+          // Write timestamped backup using the flattened data
           await fs.writeFile(
             allResultsFile,
-            JSON.stringify(results, null, 2),
+            JSON.stringify(finalResults, null, 2),
             "utf8"
           );
+
+          // Also write back to evaluations.json with flattened structure for UI
           await fs.writeFile(
             publicAllResultsFile,
-            JSON.stringify(results, null, 2),
+            JSON.stringify(finalResults, null, 2),
             "utf8"
           );
-          console.log(`📁 All results saved to: ${allResultsFile}`);
+
+          console.log(`\n📁 Results saved to: ${modelOutputDir}/`);
+          console.log(`   - evaluations.json (main results)`);
+          console.log(`   - ${path.basename(allResultsFile)} (timestamped backup)`);
         } catch (error) {
           console.warn(`Failed to save all results to file: ${error}`);
         }
@@ -2197,15 +2682,23 @@ async function main() {
         // Clean up progress tracker and output folders
         await cleanup(values.debug);
 
-        // Save all results to JSON file
-        const outputDir = process.env.OUTPUT_DIR || "/output";
+        // Note: Single-threaded execution writes results only after completion.
+        // For incremental writes during execution, use --threads 2 or higher.
+        const outputDir = process.env.OUTPUT_DIR || path.join(process.cwd(), "output");
         const allResultsFile = path.join(
           outputDir,
           `eval-results-all-${Date.now()}.json`
         );
+        const publicAllResultsFile = path.join(outputDir, `evaluations.json`);
         try {
+          await fs.mkdir(outputDir, { recursive: true });
           await fs.writeFile(
             allResultsFile,
+            JSON.stringify(results, null, 2),
+            "utf8"
+          );
+          await fs.writeFile(
+            publicAllResultsFile,
             JSON.stringify(results, null, 2),
             "utf8"
           );
@@ -2277,17 +2770,46 @@ async function main() {
       }
     }
 
-    // Output JSON result for multi-threaded parsing (always needed for process pool)
-    const resultJson = JSON.stringify(result);
-    console.log(`EVAL_RESULT:${resultJson}`);
+    // When running with --all-models, we're in a child process spawned by ProcessPool
+    // In this case, output EVAL_RESULT for the parent to parse, but don't display results
+    const isChildProcessMode = values["all-models"];
 
-    // Display results for single eval after EVAL_RESULT
-    await displaySingleResult(
-      evalPath,
-      result,
-      values.dry ?? false,
-      MODELS[0]?.name
-    );
+    // Output JSON result for multi-threaded parsing (needed for process pool)
+    if (isChildProcessMode) {
+      const resultJson = JSON.stringify(result);
+      console.log(`EVAL_RESULT:${resultJson}`);
+    } else {
+      // Save single eval result to JSON file (only when not in child process mode)
+      const modelName = MODELS.length > 0 ? MODELS[0].name : "default";
+      const sanitizedModelName = modelName
+        .replace(/[^a-zA-Z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .toLowerCase();
+
+      const baseOutputDir = process.env.OUTPUT_DIR || path.join(process.cwd(), "output");
+      const modelOutputDir = path.join(baseOutputDir, sanitizedModelName);
+      const singleResultFile = path.join(modelOutputDir, `eval-${evalPath}-${Date.now()}.json`);
+
+      try {
+        await fs.mkdir(modelOutputDir, { recursive: true });
+        await fs.writeFile(
+          singleResultFile,
+          JSON.stringify({ evalPath, result }, null, 2),
+          "utf8"
+        );
+        console.log(`📁 Result saved to: ${singleResultFile}`);
+      } catch (error) {
+        console.warn(`Failed to save result to file: ${error}`);
+      }
+
+      // Display results for single eval (only when not in child process mode)
+      await displaySingleResult(
+        evalPath,
+        result,
+        values.dry ?? false,
+        MODELS[0]?.name
+      );
+    }
 
     // Explicitly exit after single eval completion
     process.exit(0);

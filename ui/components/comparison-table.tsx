@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { ArrowUpDown, Info, Search, ChevronDown, ChevronRight } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -124,8 +124,9 @@ const processEvaluationData = (): ProcessedEvaluation[] => {
       const results = Array.isArray(item.value.result) ? item.value.result : [item.value.result]
       
       results.forEach((result) => {
-        const modelName = result.experimentName.split("-")[0].trim()
-        
+        // Use the full experiment name as the model name
+        const modelName = result.experimentName
+
         evaluations.push({
           evaluationId: result.experimentId,
           evaluationType: item.value.evalPath,
@@ -396,8 +397,13 @@ export function ComparisonTable() {
     return "text-red-600"
   }
 
-  const formatDiff = (diff: string) => {
+  const formatDiff = (diff: string, asPercentage = false) => {
     const numDiff = Number.parseFloat(diff)
+    if (asPercentage) {
+      const percentDiff = (numDiff * 100).toFixed(1)
+      if (numDiff > 0) return `+${percentDiff}%`
+      return `${percentDiff}%`
+    }
     if (numDiff > 0) return `+${diff}`
     return diff
   }
@@ -407,6 +413,10 @@ export function ComparisonTable() {
     if (score >= 0.8) return "text-emerald-600"
     if (score >= 0.7) return "text-yellow-600"
     return "text-red-600"
+  }
+
+  const formatScoreAsPercentage = (score: number) => {
+    return `${(score * 100).toFixed(1)}%`
   }
 
   return (
@@ -423,19 +433,22 @@ export function ComparisonTable() {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <Select value={globalComparison} onValueChange={handleGlobalComparisonChange}>
-            <SelectTrigger className="w-[200px]">
-              <SelectValue placeholder="Compare all models to..." />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value={allModels[0]}>No comparison</SelectItem> {/* Updated value */}
-              {allModels.map((model) => (
-                <SelectItem key={model} value={model}>
-                  vs {model}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-medium whitespace-nowrap">Baseline Model:</span>
+            <Select value={globalComparison} onValueChange={handleGlobalComparisonChange}>
+              <SelectTrigger className="w-[250px]">
+                <SelectValue placeholder="Select baseline model..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value={allModels[0]}>None (no comparison)</SelectItem>
+                {allModels.map((model) => (
+                  <SelectItem key={model} value={model}>
+                    {model}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
           <Button
             variant="outline"
             onClick={() => {
@@ -512,10 +525,9 @@ export function ComparisonTable() {
                     : null
 
                 return (
-                  <>
+                  <React.Fragment key={summary.modelName}>
                     {/* Model Summary Row */}
                     <TableRow
-                      key={summary.modelName}
                       className="cursor-pointer hover:bg-muted/50"
                       onClick={() => toggleModelExpansion(summary.modelName)}
                     >
@@ -540,12 +552,12 @@ export function ComparisonTable() {
                       <TableCell>
                         <div className="flex items-center gap-2">
                           <span className={`font-semibold ${getScoreColor(summary.avgScore)}`}>
-                            {summary.avgScore.toFixed(3)}
+                            {formatScoreAsPercentage(summary.avgScore)}
                           </span>
                           {modelComparisonData && (
                             <>
                               <span className={getDiffColor(modelComparisonData.scoreDiff)}>
-                                ({formatDiff(modelComparisonData.scoreDiff)})
+                                ({formatDiff(modelComparisonData.scoreDiff, true)})
                               </span>
                               <Tooltip>
                                 <TooltipTrigger>
@@ -553,7 +565,7 @@ export function ComparisonTable() {
                                 </TooltipTrigger>
                                 <TooltipContent>
                                   <p>Compared to {globalComparison}</p>
-                                  <p>Baseline score: {modelComparisonData.comparisonScore.toFixed(3)}</p>
+                                  <p>Baseline score: {formatScoreAsPercentage(modelComparisonData.comparisonScore)}</p>
                                 </TooltipContent>
                               </Tooltip>
                             </>
@@ -563,21 +575,21 @@ export function ComparisonTable() {
                       <TableCell>
                         <div className="flex items-center gap-2">
                           <span className={`font-semibold ${getScoreColor(summary.avgBuildScore)}`}>
-                            {summary.avgBuildScore.toFixed(3)}
+                            {formatScoreAsPercentage(summary.avgBuildScore)}
                           </span>
                         </div>
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
                           <span className={`font-semibold ${getScoreColor(summary.avgLintScore)}`}>
-                            {summary.avgLintScore.toFixed(3)}
+                            {formatScoreAsPercentage(summary.avgLintScore)}
                           </span>
                         </div>
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
                           <span className={`font-semibold ${getScoreColor(summary.avgTestScore)}`}>
-                            {summary.avgTestScore.toFixed(3)}
+                            {formatScoreAsPercentage(summary.avgTestScore)}
                           </span>
                         </div>
                       </TableCell>
@@ -629,21 +641,21 @@ export function ComparisonTable() {
                             </TableCell>
                             <TableCell>
                               <Select
-                                value={comparisonSelections[evaluation.evaluationId] || allModels[0]} // Updated value
+                                value={comparisonSelections[evaluation.evaluationId] || allModels[0]}
                                 onValueChange={(value) => handleComparisonChange(evaluation.evaluationId, value)}
                               >
-                                <SelectTrigger className="w-[180px]">
+                                <SelectTrigger className="w-[200px]">
                                   <SelectValue
-                                    placeholder={globalComparison ? `vs ${globalComparison}` : "Select comparison"}
+                                    placeholder={globalComparison ? `Compare to ${globalComparison}` : "Select baseline"}
                                   />
                                 </SelectTrigger>
                                 <SelectContent>
                                   <SelectItem value={allModels[0]}>
-                                    {globalComparison ? `Use global (vs ${globalComparison})` : "No comparison"}
+                                    {globalComparison ? `Use global baseline` : "No comparison"}
                                   </SelectItem>
                                   {availableModels.map((model) => (
                                     <SelectItem key={model} value={model}>
-                                      vs {model}
+                                      {model}
                                     </SelectItem>
                                   ))}
                                 </SelectContent>
@@ -654,11 +666,11 @@ export function ComparisonTable() {
                                 <span
                                   className={`font-semibold ${getScoreColor(evaluation.scores.evaluationScore.score)}`}
                                 >
-                                  {evaluation.scores.evaluationScore.score.toFixed(3)}
+                                  {formatScoreAsPercentage(evaluation.scores.evaluationScore.score)}
                                 </span>
                                 {comparisonData && (
                                   <span className={getDiffColor(comparisonData.scoreDiff)}>
-                                    ({formatDiff(comparisonData.scoreDiff)})
+                                    ({formatDiff(comparisonData.scoreDiff, true)})
                                   </span>
                                 )}
                                 <Tooltip>
@@ -668,7 +680,7 @@ export function ComparisonTable() {
                                   <TooltipContent>
                                     <p>Evaluation score (higher is better)</p>
                                     {comparisonData && (
-                                      <p>Comparison score: {comparisonData.comparisonScore.toFixed(3)}</p>
+                                      <p>Comparison score: {formatScoreAsPercentage(comparisonData.comparisonScore)}</p>
                                     )}
                                     <p>Improvements: {evaluation.scores.evaluationScore.improvements}</p>
                                     <p>Regressions: {evaluation.scores.evaluationScore.regressions}</p>
@@ -679,21 +691,21 @@ export function ComparisonTable() {
                             <TableCell>
                               <div className="flex items-center gap-2">
                                 <span className={`font-semibold ${getScoreColor(evaluation.scores.buildScore?.score ?? 0)}`}>
-                                  {(evaluation.scores.buildScore?.score ?? 0).toFixed(3)}
+                                  {formatScoreAsPercentage(evaluation.scores.buildScore?.score ?? 0)}
                                 </span>
                               </div>
                             </TableCell>
                             <TableCell>
                               <div className="flex items-center gap-2">
                                 <span className={`font-semibold ${getScoreColor(evaluation.scores.lintScore?.score ?? 0)}`}>
-                                  {(evaluation.scores.lintScore?.score ?? 0).toFixed(3)}
+                                  {formatScoreAsPercentage(evaluation.scores.lintScore?.score ?? 0)}
                                 </span>
                               </div>
                             </TableCell>
                             <TableCell>
                               <div className="flex items-center gap-2">
                                 <span className={`font-semibold ${getScoreColor(evaluation.scores.testScore?.score ?? 0)}`}>
-                                  {(evaluation.scores.testScore?.score ?? 0).toFixed(3)}
+                                  {formatScoreAsPercentage(evaluation.scores.testScore?.score ?? 0)}
                                 </span>
                               </div>
                             </TableCell>
@@ -720,7 +732,7 @@ export function ComparisonTable() {
                           </TableRow>
                         )
                       })}
-                  </>
+                  </React.Fragment>
                 )
               })}
             </TableBody>

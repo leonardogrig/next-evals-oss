@@ -1,5 +1,5 @@
 import { LanguageModel } from "ai";
-import { createCustomProvider } from "./providers/custom-provider";
+import { createOpenAI } from "@ai-sdk/openai";
 import * as fs from "fs";
 import * as path from "path";
 export interface Model {
@@ -41,9 +41,10 @@ function loadCustomProviders(): Model[] {
 
     for (const config of customProviderConfigs) {
       try {
-        const provider = createCustomProvider({
+        // Use createOpenAI with custom baseURL for OpenRouter compatibility
+        const provider = createOpenAI({
           baseURL: config.baseURL,
-          apiKey: config.apiKey,
+          apiKey: config.apiKey || process.env.OPENROUTER_API_KEY,
           headers: config.headers,
         });
 
@@ -83,5 +84,5 @@ const baseModels: Model[] = [
   },
 ];
 
-// Combine base models without custom providers
-export const MODELS: Model[] = [...baseModels];
+// Load only custom providers (gpt-5.1-codex)
+export const MODELS: Model[] = [...loadCustomProviders()];

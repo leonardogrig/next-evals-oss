@@ -10,7 +10,7 @@ export interface EvalResult {
   };
 }
 
-export function formatClaudeCodeResultsTable(results: EvalResult[]): string {
+export function formatClaudeCodeResultsTable(results: EvalResult[], modelName?: string): string {
   const lines: string[] = [];
 
   const evalColWidth = Math.max(25, ...results.map(r => r.evalPath.length));
@@ -42,7 +42,8 @@ export function formatClaudeCodeResultsTable(results: EvalResult[]): string {
 
 
   // Build header
-  const header = `| ${"Eval".padEnd(evalColWidth)} | ${"Claude Code".padEnd(modelColWidth)} |`;
+  const headerName = modelName || "Claude Code";
+  const header = `| ${"Eval".padEnd(evalColWidth)} | ${headerName.padEnd(modelColWidth)} |`;
   lines.push(header);
 
   // Build separator
