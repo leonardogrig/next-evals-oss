@@ -1277,41 +1277,25 @@ class ProcessPool {
           // Handle Braintrust format (flattened structure with experimentName as model)
           if (evalResult?.experimentName && evalResult?.scores) {
             const modelName = evalResult.experimentName;
-            const evalScore = evalResult.scores.eval_score?.score ?? 0;
-
-            // Only consider it completed if it passed (score = 1.0)
-            if (evalScore >= 1.0) {
-              const key = `${evalPath}_${modelName}`;
-              this.completedEvals.add(key);
-            }
+            // Mark as completed regardless of pass/fail - we have a result
+            const key = `${evalPath}_${modelName}`;
+            this.completedEvals.add(key);
           }
           // Legacy format support (old multi-model structure)
           else if (evalResult?.modelResults && Array.isArray(evalResult.modelResults)) {
             for (const mr of evalResult.modelResults) {
               const modelName = mr.model;
-              const isPassed =
-                mr.result?.evaluationResults?.buildSuccess &&
-                mr.result?.evaluationResults?.lintSuccess &&
-                mr.result?.evaluationResults?.testSuccess;
-
-              if (isPassed) {
-                const key = `${evalPath}_${modelName}`;
-                this.completedEvals.add(key);
-              }
+              // Mark as completed regardless of pass/fail
+              const key = `${evalPath}_${modelName}`;
+              this.completedEvals.add(key);
             }
           }
           // Single model structure
           else if (evalResult?.evaluationResults && MODELS.length > 0) {
             const modelName = MODELS[0].name;
-            const isPassed =
-              evalResult.evaluationResults.buildSuccess &&
-              evalResult.evaluationResults.lintSuccess &&
-              evalResult.evaluationResults.testSuccess;
-
-            if (isPassed) {
-              const key = `${evalPath}_${modelName}`;
-              this.completedEvals.add(key);
-            }
+            // Mark as completed regardless of pass/fail
+            const key = `${evalPath}_${modelName}`;
+            this.completedEvals.add(key);
           }
         }
       }
@@ -1546,20 +1530,16 @@ class ProcessPool {
           "utf8"
         );
 
-        // Mark models as completed if they passed
+        // Mark models as completed (regardless of pass/fail - we have a result)
         if (status === "success" && result) {
           // Handle both array (multi-model) and single model
           const modelResults = Array.isArray(transformedResult) ? transformedResult : [transformedResult];
 
           for (const modelResult of modelResults) {
-            if (modelResult?.experimentName && modelResult?.scores) {
+            if (modelResult?.experimentName) {
               const modelName = modelResult.experimentName;
-              const evalScore = modelResult.scores.eval_score?.score ?? 0;
-
-              if (evalScore >= 1.0) {
-                const key = `${evalPath}_${modelName}`;
-                this.completedEvals.add(key);
-              }
+              const key = `${evalPath}_${modelName}`;
+              this.completedEvals.add(key);
             }
           }
         }

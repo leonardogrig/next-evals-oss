@@ -1131,7 +1131,7 @@ async function runEvalDry(
       const existingData = await fs.readFile(evaluationsFile, "utf8");
       const existingResults = JSON.parse(existingData);
 
-      // Build set of completed model names for this eval
+      // Build set of models that already have results for this eval (pass or fail)
       const completedModels = new Set<string>();
       for (const result of existingResults) {
         if (result.status === "fulfilled" && result.value?.status === "success") {
@@ -1148,24 +1148,22 @@ async function runEvalDry(
               console.log(`  📋 Found existing result: ${modelName} (score: ${evalScore})`);
             }
 
-            // Only skip if it passed (score = 1.0)
-            if (evalScore >= 1.0) {
-              completedModels.add(modelName);
-            }
+            // Skip any model that already has a result (pass or fail)
+            completedModels.add(modelName);
           }
         }
       }
 
       if (verbose || debug) {
-        console.log(`  📋 Completed models for ${evalPath}: ${Array.from(completedModels).join(", ") || "none"}`);
+        console.log(`  📋 Models with existing results for ${evalPath}: ${Array.from(completedModels).join(", ") || "none"}`);
       }
 
-      // Filter out models that already have passing results
+      // Filter out models that already have results (pass or fail)
       const filteredModels = MODELS.filter(model => !completedModels.has(model.name));
 
       if (filteredModels.length < MODELS.length) {
         const skippedModels = MODELS.filter(model => completedModels.has(model.name)).map(m => m.name);
-        console.log(`⏭️  Skipping ${skippedModels.length} model(s) that already passed: ${skippedModels.join(", ")}`);
+        console.log(`⏭️  Skipping ${skippedModels.length} model(s) with existing results: ${skippedModels.join(", ")}`);
       }
 
       modelsToRun = filteredModels.length > 0 ? filteredModels : [];
