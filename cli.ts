@@ -132,6 +132,7 @@ export class ProgressTracker {
   private startTime = Date.now();
   private interval: NodeJS.Timeout | null = null;
   private totalEvals: number = 0;
+  private lastCompleted: number = -1; // Start at -1 to show initial "0/X" message
 
   start(evalPaths: string[]) {
     this.totalEvals = evalPaths.length;
@@ -143,15 +144,15 @@ export class ProgressTracker {
 
     console.log("⚡ Running evals...\n");
 
-    // Show periodic progress updates
+    // Show periodic progress updates (but only if there's change)
     this.interval = setInterval(() => {
       this.showProgress();
-    }, 2000);
+    }, 5000); // Increased to 5 seconds to reduce noise
   }
 
   succeed(id: string) {
     this.statuses.set(id, "success");
-    console.log(`✅ ${id}`);
+    // Don't log here - detailed logs are shown by the eval runner
 
     if (this.allComplete()) {
       this.stop();
@@ -160,7 +161,7 @@ export class ProgressTracker {
 
   fail(id: string) {
     this.statuses.set(id, "fail");
-    console.log(`❌ ${id}`);
+    // Don't log here - detailed logs are shown by the eval runner
 
     if (this.allComplete()) {
       this.stop();
@@ -182,9 +183,13 @@ export class ProgressTracker {
     ).length;
     const elapsed = Math.round((Date.now() - this.startTime) / 1000);
 
-    console.log(
-      `📊 Progress: ${completed}/${this.totalEvals} complete (${successful} passed) - ${elapsed}s elapsed`
-    );
+    // Only log if there's actual progress
+    if (completed > this.lastCompleted) {
+      console.log(
+        `\n📊 Progress: ${completed}/${this.totalEvals} complete (${successful} passed) - ${elapsed}s elapsed\n`
+      );
+      this.lastCompleted = completed;
+    }
   }
 
   stop() {
@@ -1491,32 +1496,48 @@ class ProcessPool {
           existingResults = [];
         }
 
-        // Find if this eval already exists in results (in case of retry)
-        const existingIndex = existingResults.findIndex((r: any) => {
-          if (r.status === "fulfilled") {
-            return r.value?.evalPath === evalPath;
-          } else if (r.status === "rejected") {
-            return r.reason?.evalPath === evalPath;
-          }
-          return false;
-        });
-
         // Transform result to Braintrust format for UI compatibility
         const transformedResult = status === "success" && result
           ? this.transformToBraintrustFormat(evalPath, result)
           : result;
 
-        // Create the result object in the same format as Promise.allSettled
-        const newResult = status === "success"
-          ? { status: "fulfilled", value: { evalPath, status, result: transformedResult } }
-          : { status: "rejected", reason: { evalPath, error } };
-
-        // Update or append
-        if (existingIndex >= 0) {
-          existingResults[existingIndex] = newResult;
+        // Flatten multi-model array results into separate entries
+        let newResults: any[] = [];
+        if (status === "success" && Array.isArray(transformedResult)) {
+          // Multi-model result: create separate entry for each model
+          newResults = transformedResult.map((modelResult: any) => ({
+            status: "fulfilled",
+            value: { evalPath, status, result: modelResult }
+          }));
         } else {
-          existingResults.push(newResult);
+          // Single result or error
+          const newResult = status === "success"
+            ? { status: "fulfilled", value: { evalPath, status, result: transformedResult } }
+            : { status: "rejected", reason: { evalPath, error } };
+          newResults = [newResult];
         }
+
+        // Extract model names from new results for removal
+        const newModelNames = new Set<string>();
+        for (const newRes of newResults) {
+          if (newRes.status === "fulfilled" && newRes.value?.result?.experimentName) {
+            newModelNames.add(newRes.value.result.experimentName);
+          }
+        }
+
+        // Remove existing entries for the same eval+model combinations
+        existingResults = existingResults.filter((r: any) => {
+          if (r.status === "fulfilled" && r.value?.evalPath === evalPath) {
+            const modelName = r.value.result?.experimentName;
+            // Keep entries for models not in the new results
+            return modelName && !newModelNames.has(modelName);
+          }
+          // Keep all other entries
+          return r.status !== "fulfilled" || r.value?.evalPath !== evalPath;
+        });
+
+        // Append new results
+        existingResults.push(...newResults);
 
         // Write back to file
         await fs.writeFile(
@@ -1525,33 +1546,26 @@ class ProcessPool {
           "utf8"
         );
 
-        // Mark as completed if it was a successful result with all checks passing
+        // Mark models as completed if they passed
         if (status === "success" && result) {
-          let isPassed = false;
+          // Handle both array (multi-model) and single model
+          const modelResults = Array.isArray(transformedResult) ? transformedResult : [transformedResult];
 
-          // Handle both modelResults structure (multi-model) and direct structure (single model)
-          if (result.modelResults && Array.isArray(result.modelResults)) {
-            // Multi-model structure: check if all models passed
-            isPassed = result.modelResults.every((mr: any) =>
-              mr.result?.evaluationResults?.buildSuccess &&
-              mr.result?.evaluationResults?.lintSuccess &&
-              mr.result?.evaluationResults?.testSuccess
-            );
-          } else if (result.evaluationResults) {
-            // Single model structure
-            isPassed =
-              result.evaluationResults.buildSuccess &&
-              result.evaluationResults.lintSuccess &&
-              result.evaluationResults.testSuccess;
-          }
+          for (const modelResult of modelResults) {
+            if (modelResult?.experimentName && modelResult?.scores) {
+              const modelName = modelResult.experimentName;
+              const evalScore = modelResult.scores.eval_score?.score ?? 0;
 
-          if (isPassed) {
-            this.completedEvals.add(evalPath);
+              if (evalScore >= 1.0) {
+                const key = `${evalPath}_${modelName}`;
+                this.completedEvals.add(key);
+              }
+            }
           }
         }
 
         if (this.verbose) {
-          console.log(`📁 Appended result for ${evalPath} to ${this.evaluationsFile}`);
+          console.log(`📁 Appended ${newResults.length} result(s) for ${evalPath} to ${this.evaluationsFile}`);
         }
       } catch (error) {
         console.warn(`Failed to append result to file: ${error}`);
@@ -1648,26 +1662,22 @@ class ProcessPool {
       this.queue.length > 0 &&
       this.activeProcesses.size < this.maxProcesses
     ) {
-      // Check available memory before spawning new process
-      const memoryCheck = checkAvailableMemory(500); // Require 500MB free
+      // Check available memory before spawning new process (require 100MB free)
+      const memoryCheck = checkAvailableMemory(100);
 
       if (!memoryCheck.hasEnough) {
-        if (this.verbose) {
-          console.log(
-            `⚠️  Waiting for memory: ${memoryCheck.available}MB available (need 500MB), ${memoryCheck.percentage}% free`
-          );
-        }
+        console.log(
+          `⚠️  Waiting for memory: ${memoryCheck.available}MB available (need 100MB), ${memoryCheck.percentage}% free`
+        );
 
         // Start periodic memory checking if not already running
         if (!this.memoryCheckInterval && this.queue.length > 0) {
           this.memoryCheckInterval = setInterval(() => {
-            const recheckMemory = checkAvailableMemory(500);
+            const recheckMemory = checkAvailableMemory(100);
             if (recheckMemory.hasEnough) {
-              if (this.verbose) {
-                console.log(
-                  `✓ Memory available again: ${recheckMemory.available}MB (${recheckMemory.percentage}% free)`
-                );
-              }
+              console.log(
+                `✓ Memory available again: ${recheckMemory.available}MB (${recheckMemory.percentage}% free)`
+              );
               clearInterval(this.memoryCheckInterval!);
               this.memoryCheckInterval = null;
               this.processQueue();
@@ -1693,6 +1703,11 @@ class ProcessPool {
     resolve: Function;
     reject: Function;
   }) {
+    // Log start of eval
+    if (!this.verbose) {
+      console.log(`\n🔄 Starting: ${job.evalPath}`);
+    }
+
     // Use bun to run the eval directly instead of worker threads
     const child = spawn(
       "bun",
@@ -1720,9 +1735,19 @@ class ProcessPool {
       const output = data.toString();
       stdout += output;
 
-      // If verbose, show output but filter out EVAL_RESULT line
+      // Show model skip/run messages and completion even in non-verbose mode
+      const lines = output.split("\n");
+      for (const line of lines) {
+        // Show messages with these patterns: skip (⏭️), run (🚀), success (✅), fail (❌), progress (▶️), or debug (📋)
+        if (line.includes("⏭️") || line.includes("🚀") || line.includes("✅") || line.includes("❌") || line.includes("▶️") || line.includes("📋")) {
+          if (!this.verbose && !line.startsWith("EVAL_RESULT:")) {
+            console.log(`  ${line}`);
+          }
+        }
+      }
+
+      // If verbose, show all output but filter out EVAL_RESULT line
       if (this.verbose) {
-        const lines = output.split("\n");
         const filteredLines = lines.filter(
           (line) => !line.startsWith("EVAL_RESULT:")
         );

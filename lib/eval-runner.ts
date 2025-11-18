@@ -1143,12 +1143,21 @@ async function runEvalDry(
             const modelName = evalResult.experimentName;
             const evalScore = evalResult.scores.eval_score?.score ?? 0;
 
+            // Debug output
+            if (verbose || debug) {
+              console.log(`  📋 Found existing result: ${modelName} (score: ${evalScore})`);
+            }
+
             // Only skip if it passed (score = 1.0)
             if (evalScore >= 1.0) {
               completedModels.add(modelName);
             }
           }
         }
+      }
+
+      if (verbose || debug) {
+        console.log(`  📋 Completed models for ${evalPath}: ${Array.from(completedModels).join(", ") || "none"}`);
       }
 
       // Filter out models that already have passing results
@@ -1177,22 +1186,18 @@ async function runEvalDry(
 
   if (allModels && modelsToRun.length > 1) {
     // For multiple models, run each with separate output directories
-    if (verbose) {
-      console.log(
-        `🔒 Running ${modelsToRun.length} models with isolated output directories`,
-      );
-    }
+    console.log(
+      `🚀 Running ${modelsToRun.length} model(s): ${modelsToRun.map(m => m.name).join(", ")}`,
+    );
 
     // Run each model with its own output directory
     for (let i = 0; i < modelsToRun.length; i++) {
       const model = modelsToRun[i];
       const modelIndex = MODELS.findIndex((m) => m.name === model.name);
 
-      if (verbose) {
-        console.log(
-          `🚀 Running model ${i + 1}/${modelsToRun.length}: ${model.name}`,
-        );
-      }
+      console.log(
+        `  ▶️  [${i + 1}/${modelsToRun.length}] ${model.name}`
+      );
 
       const result = await runSingleModelInProcess(
         modelIndex,
@@ -1201,11 +1206,20 @@ async function runEvalDry(
         debug,
       );
 
+      // Log completion status
+      const passed = result.score >= 1.0;
+      const statusIcon = passed ? "✅" : "❌";
+      console.log(
+        `  ${statusIcon} ${model.name}: ${passed ? "PASSED" : "FAILED"} (score: ${result.score.toFixed(2)})`
+      );
+
       modelResults.push(result);
     }
-  } else {
+  } else if (modelsToRun.length === 1) {
     // For single model, run in the current process (backward compatibility)
     const model = modelsToRun[0];
+    console.log(`🚀 Running 1 model: ${model.name}`);
+
     const modelIndex = MODELS.findIndex((m) => m.name === model.name);
     const result = await runSingleModelInProcess(
       modelIndex,
@@ -1213,6 +1227,14 @@ async function runEvalDry(
       verbose,
       debug,
     );
+
+    // Log completion status
+    const passed = result.score >= 1.0;
+    const statusIcon = passed ? "✅" : "❌";
+    console.log(
+      `  ${statusIcon} ${model.name}: ${passed ? "PASSED" : "FAILED"} (score: ${result.score.toFixed(2)})`
+    );
+
     modelResults.push(result);
   }
 
