@@ -4,99 +4,287 @@
     "value": {
       "evalPath": "000-app-router-migration-simple",
       "status": "success",
-      "result": {
-        "projectName": "EVALS",
-        "experimentName": "OpenAI GPT-5 Codex",
-        "projectId": "local-evals",
-        "experimentId": "000-app-router-migration-simple-1763419407938",
-        "projectUrl": "#local-evals",
-        "experimentUrl": "#000-app-router-migration-simple-1763419407938",
-        "comparisonExperimentName": "",
-        "scores": {
-          "eval_score": {
-            "name": "eval_score",
-            "score": 0,
-            "improvements": 0,
-            "regressions": 1
+      "result": [
+        {
+          "projectName": "EVALS",
+          "experimentName": "OpenAI GPT-5.1 Codex",
+          "projectId": "local-evals",
+          "experimentId": "000-app-router-migration-simple-1763428006719",
+          "projectUrl": "#local-evals",
+          "experimentUrl": "#000-app-router-migration-simple-1763428006719",
+          "comparisonExperimentName": "",
+          "scores": {
+            "eval_score": {
+              "name": "eval_score",
+              "score": 0,
+              "improvements": 0,
+              "regressions": 1
+            },
+            "build_score": {
+              "name": "build_score",
+              "score": 0,
+              "improvements": 0,
+              "regressions": 1
+            },
+            "lint_score": {
+              "name": "lint_score",
+              "score": 1,
+              "improvements": 0,
+              "regressions": 0
+            },
+            "test_score": {
+              "name": "test_score",
+              "score": 1,
+              "improvements": 0,
+              "regressions": 0
+            }
           },
-          "build_score": {
-            "name": "build_score",
-            "score": 0,
-            "improvements": 0,
-            "regressions": 1
-          },
-          "lint_score": {
-            "name": "lint_score",
-            "score": 1,
-            "improvements": 0,
-            "regressions": 0
-          },
-          "test_score": {
-            "name": "test_score",
-            "score": 0,
-            "improvements": 0,
-            "regressions": 1
+          "metrics": {
+            "start": {
+              "name": "start",
+              "metric": 0,
+              "unit": "s",
+              "improvements": 0,
+              "regressions": 0
+            },
+            "end": {
+              "name": "end",
+              "metric": 1.4516623340000006,
+              "unit": "s",
+              "improvements": 0,
+              "regressions": 0
+            },
+            "duration": {
+              "name": "duration",
+              "metric": 1.4516623340000006,
+              "unit": "s",
+              "improvements": 0,
+              "regressions": 0
+            },
+            "prompt_tokens": {
+              "name": "prompt_tokens",
+              "metric": 0,
+              "unit": "tok",
+              "improvements": 0,
+              "regressions": 0
+            },
+            "completion_tokens": {
+              "name": "completion_tokens",
+              "metric": 0,
+              "unit": "tok",
+              "improvements": 0,
+              "regressions": 0
+            },
+            "total_tokens": {
+              "name": "total_tokens",
+              "metric": 0,
+              "unit": "tok",
+              "improvements": 0,
+              "regressions": 0
+            },
+            "prompt_cached_tokens": {
+              "name": "prompt_cached_tokens",
+              "metric": 0,
+              "unit": "tok",
+              "improvements": 0,
+              "regressions": 0
+            },
+            "prompt_cache_creation_tokens": {
+              "name": "prompt_cache_creation_tokens",
+              "metric": 0,
+              "unit": "tok",
+              "improvements": 0,
+              "regressions": 0
+            }
           }
         },
-        "metrics": {
-          "start": {
-            "name": "start",
-            "metric": 0,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
+        {
+          "projectName": "EVALS",
+          "experimentName": "OpenAI GPT-5 Codex",
+          "projectId": "local-evals",
+          "experimentId": "000-app-router-migration-simple-1763428006719",
+          "projectUrl": "#local-evals",
+          "experimentUrl": "#000-app-router-migration-simple-1763428006719",
+          "comparisonExperimentName": "",
+          "scores": {
+            "eval_score": {
+              "name": "eval_score",
+              "score": 0,
+              "improvements": 0,
+              "regressions": 1
+            },
+            "build_score": {
+              "name": "build_score",
+              "score": 0,
+              "improvements": 0,
+              "regressions": 1
+            },
+            "lint_score": {
+              "name": "lint_score",
+              "score": 1,
+              "improvements": 0,
+              "regressions": 0
+            },
+            "test_score": {
+              "name": "test_score",
+              "score": 0,
+              "improvements": 0,
+              "regressions": 1
+            }
           },
-          "end": {
-            "name": "end",
-            "metric": 0.8108393750000032,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
+          "metrics": {
+            "start": {
+              "name": "start",
+              "metric": 0,
+              "unit": "s",
+              "improvements": 0,
+              "regressions": 0
+            },
+            "end": {
+              "name": "end",
+              "metric": 0.6441002920000028,
+              "unit": "s",
+              "improvements": 0,
+              "regressions": 0
+            },
+            "duration": {
+              "name": "duration",
+              "metric": 0.6441002920000028,
+              "unit": "s",
+              "improvements": 0,
+              "regressions": 0
+            },
+            "prompt_tokens": {
+              "name": "prompt_tokens",
+              "metric": 0,
+              "unit": "tok",
+              "improvements": 0,
+              "regressions": 0
+            },
+            "completion_tokens": {
+              "name": "completion_tokens",
+              "metric": 0,
+              "unit": "tok",
+              "improvements": 0,
+              "regressions": 0
+            },
+            "total_tokens": {
+              "name": "total_tokens",
+              "metric": 0,
+              "unit": "tok",
+              "improvements": 0,
+              "regressions": 0
+            },
+            "prompt_cached_tokens": {
+              "name": "prompt_cached_tokens",
+              "metric": 0,
+              "unit": "tok",
+              "improvements": 0,
+              "regressions": 0
+            },
+            "prompt_cache_creation_tokens": {
+              "name": "prompt_cache_creation_tokens",
+              "metric": 0,
+              "unit": "tok",
+              "improvements": 0,
+              "regressions": 0
+            }
+          }
+        },
+        {
+          "projectName": "EVALS",
+          "experimentName": "OpenAI GPT-5 Nano",
+          "projectId": "local-evals",
+          "experimentId": "000-app-router-migration-simple-1763428006719",
+          "projectUrl": "#local-evals",
+          "experimentUrl": "#000-app-router-migration-simple-1763428006719",
+          "comparisonExperimentName": "",
+          "scores": {
+            "eval_score": {
+              "name": "eval_score",
+              "score": 0,
+              "improvements": 0,
+              "regressions": 1
+            },
+            "build_score": {
+              "name": "build_score",
+              "score": 0,
+              "improvements": 0,
+              "regressions": 1
+            },
+            "lint_score": {
+              "name": "lint_score",
+              "score": 1,
+              "improvements": 0,
+              "regressions": 0
+            },
+            "test_score": {
+              "name": "test_score",
+              "score": 1,
+              "improvements": 0,
+              "regressions": 0
+            }
           },
-          "duration": {
-            "name": "duration",
-            "metric": 0.8108393750000032,
-            "unit": "s",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_tokens": {
-            "name": "prompt_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "completion_tokens": {
-            "name": "completion_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "total_tokens": {
-            "name": "total_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_cached_tokens": {
-            "name": "prompt_cached_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
-          },
-          "prompt_cache_creation_tokens": {
-            "name": "prompt_cache_creation_tokens",
-            "metric": 0,
-            "unit": "tok",
-            "improvements": 0,
-            "regressions": 0
+          "metrics": {
+            "start": {
+              "name": "start",
+              "metric": 0,
+              "unit": "s",
+              "improvements": 0,
+              "regressions": 0
+            },
+            "end": {
+              "name": "end",
+              "metric": 1.363280167000019,
+              "unit": "s",
+              "improvements": 0,
+              "regressions": 0
+            },
+            "duration": {
+              "name": "duration",
+              "metric": 1.363280167000019,
+              "unit": "s",
+              "improvements": 0,
+              "regressions": 0
+            },
+            "prompt_tokens": {
+              "name": "prompt_tokens",
+              "metric": 0,
+              "unit": "tok",
+              "improvements": 0,
+              "regressions": 0
+            },
+            "completion_tokens": {
+              "name": "completion_tokens",
+              "metric": 0,
+              "unit": "tok",
+              "improvements": 0,
+              "regressions": 0
+            },
+            "total_tokens": {
+              "name": "total_tokens",
+              "metric": 0,
+              "unit": "tok",
+              "improvements": 0,
+              "regressions": 0
+            },
+            "prompt_cached_tokens": {
+              "name": "prompt_cached_tokens",
+              "metric": 0,
+              "unit": "tok",
+              "improvements": 0,
+              "regressions": 0
+            },
+            "prompt_cache_creation_tokens": {
+              "name": "prompt_cache_creation_tokens",
+              "metric": 0,
+              "unit": "tok",
+              "improvements": 0,
+              "regressions": 0
+            }
           }
         }
-      }
+      ]
     }
   },
   {
